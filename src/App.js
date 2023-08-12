@@ -1,0 +1,121 @@
+// open ai 
+import './App.css';
+import axios from 'axios';
+import React, { useState } from 'react';
+// the rest
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ScrollToTop from './ScrollToTop';
+import Home from './home';
+import About from './About';
+import Stories from './Stories';
+import Plans from './Plans';
+import Contact from './Contact';
+import Account from './Account';
+import Basics from './Basics';
+import ComputerScience from './Computer-Science';
+import Biology from './Biology';
+import BusinessAdministration from './Business-Administration';
+import Chemistry from './Chemistry';
+import Communications from './Communications';
+import Economics from './Economics';
+import Education from './Education';
+import Engineering from './Engineering';
+import English from './English';
+import EnvironmentalScience from './Environmental-Science';
+import FineArts from './Fine-Arts';
+import History from './History';
+import Journalism from './Journalism';
+import Mathematics from './Mathematics';
+import Music from './Music';
+import Nursing from './Nursing';
+import Physics from './Physics';
+import PoliticalScience from './Political-Science';
+import Psychology from './Psychology';
+import Sociology from './Sociology';
+
+function App() {
+  // open ai
+  const [prompt, setPrompt] = useState("");
+  const [response, setResponse] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios 
+      .post("https://localhost:8080/chat", { prompt })
+      .then((res)=>{ 
+        setResponse(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // return (
+  // <>
+  //   <div className="w-[720px] mx-auto py-24">
+  //     <div className="w-full justify-center items-center px-8">
+  //       <form className="w-full text-center" onSubmit={handleSubmit}>
+  //         <div className="md-6">
+  //           <label
+  //             className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4"
+  //             htmlFor="inline-full-name"
+  //           >
+  //             Just say/ask anything:
+  //           </label>
+  //         </div>
+  //         <div className="py-4">
+  //           <input
+  //             className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+  //             type="submit"
+  //             value="Submit" // This change is necessary for input of type "submit"
+  //           />
+  //         </div>
+  //       </form>
+  //       <div className="w-full items-center mt-4">
+  //         <p>{response}</p>
+  //       </div>
+  //     </div>
+  //   </div>
+  // </>
+  // );
+  
+  // the rest
+  const [categoryData, setCategoryData] = useState({});
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="stories" element={<Stories />} />
+        <Route path="plans" element={<Plans />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="account" element={<Account />} />
+        <Route path="basics" element={<Basics categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="computer-science" element={<ComputerScience categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="biology" element={<Biology categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="business-administration" element={<BusinessAdministration categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="chemistry" element={<Chemistry categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="communications" element={<Communications categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="economics" element={<Economics categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="education" element={<Education categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="engineering" element={<Engineering categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="english" element={<English categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="environmental-science" element={<EnvironmentalScience categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="fine-arts" element={<FineArts categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="history" element={<History categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="journalism" element={<Journalism categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="mathematics" element={<Mathematics categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="music" element={<Music categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="nursing" element={<Nursing categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="physics" element={<Physics categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="political-science" element={<PoliticalScience categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="psychology" element={<Psychology categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+        <Route path="sociology" element={<Sociology categoryData={categoryData} setCategoryData={setCategoryData}/>} />
+    </Routes>
+  </BrowserRouter>
+  );
+}
+
+export default App;
