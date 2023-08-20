@@ -166,12 +166,12 @@ function Basics() {
               onChange={(e) => setSelectedMajor(e.target.value)}
             >
             <option value="">Select a major</option>
-            <option value="Biology">Biology</option>
+            {/* <option value="Biology">Biology</option>
             <option value="Business Administration">Business Administration</option>
             <option value="Chemistry">Chemistry</option>
-            <option value="Communications">Communications</option>
+            <option value="Communications">Communications</option> */}
             <option value="Computer Science">Computer Science</option>
-            <option value="Economics">Economics</option>
+            {/* <option value="Economics">Economics</option>
             <option value="Education">Education</option>
             <option value="Engineering">Engineering</option>
             <option value="English">English</option>
@@ -185,7 +185,7 @@ function Basics() {
             <option value="Physics">Physics</option>
             <option value="Political Science">Political Science</option>
             <option value="Psychology">Psychology</option>
-            <option value="Sociology">Sociology</option>
+            <option value="Sociology">Sociology</option> */}
             </select>
         </div>
         </div>
