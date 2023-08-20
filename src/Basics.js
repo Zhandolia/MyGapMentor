@@ -195,11 +195,28 @@ function Basics() {
             <h3 id='basics-title'>Volunteering</h3>
             {categoryData.volunteering?.showForm ? (
             <div>
-                {categoryData.volunteering.events.map((event, index) => (
+                {/* {categoryData.volunteering.events.map((event, index) => (
                 <div key={index}>
                     <label id='basics-labels'>How did you contribute?</label>
                     <input
                     type="text"
+                    placeholder="Describe in 2-3 sentences"
+                    value={event.description || ''}
+                    onChange={(e) =>
+                        handleInputChange('volunteering', index, 'description', e.target.value)
+                    }
+                    />
+                    {index > 0 && (
+                    <button onClick={() => handleRemoveEvent('volunteering', index)}>
+                        Remove
+                    </button>
+                    )}
+                </div>
+                ))} */}
+                {categoryData.volunteering.events.map((event, index) => (
+                <div key={index}>
+                    <label id='basics-labels'>How did you contribute?</label>
+                    <textarea
                     placeholder="Describe in 2-3 sentences"
                     value={event.description || ''}
                     onChange={(e) =>
