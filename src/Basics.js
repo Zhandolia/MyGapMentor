@@ -18,69 +18,91 @@ function Basics() {
     additional_information: {showForm: true, events: [{}]}
    });
 
-   const handleClick = () => {
+   const gatherUserInputs = () => {
+    return {
+        volunteering: categoryData.volunteering.events,
+        internships: categoryData.internships.events,
+        pet_projects: categoryData.pet_projects.events,
+        research_projects: categoryData.research_projects.events,
+        jobs: categoryData.jobs.events,
+        hackathons: categoryData.hackathons.events,
+        additional_information: categoryData.additional_information.events
+        };
+    };
+
+   const handleClick = async () => {
+
+    const userInputs = gatherUserInputs();
+    try {
+        const response = await axios.post('/api/generate-activities', userInputs);
+        const plan = response.data.activities;
+        // Navigate to the new page with the plan data
+        navigate('/plan', { state: { plan } });
+    } catch (error) {
+        console.error('Error generating plan:', error);
+    }
 
     switch (selectedMajor) {
-        case 'Biology':
-            navigate('/Biology');
-            break;
-        case 'Business Administration':
-            navigate('/Business-Administration');
-            break;
-        case 'Chemistry':
-            navigate('/Chemistry');
-            break;
-        case 'Communications':
-            navigate('/Communications');
-            break;
+        // case 'Biology':
+        //     navigate('/Biology');
+        //     break;
+        // case 'Business Administration':
+        //     navigate('/Business-Administration');
+        //     break;
+        // case 'Chemistry':
+        //     navigate('/Chemistry');
+        //     break;
+        // case 'Communications':
+        //     navigate('/Communications');
+        //     break;
         case 'Computer Science':
             navigate('/Computer-Science');
             break;
-        case 'Economics':
-            navigate('/Economics');
-            break;
-        case 'Education':
-            navigate('/Education');
-            break;
-        case 'Engineering':
-            navigate('/Engineering');
-            break;
-        case 'English':
-            navigate('/English');
-            break;
-        case 'Environmental Science':
-            navigate('/Environmental-Science');
-            break;
-        case 'Fine Arts':
-            navigate('/FineArts');
-            break;
-        case 'History':
-            navigate('/History');
-            break;
-        case 'Journalism':
-            navigate('/Journalism');
-            break;
-        case 'Mathematics':
-            navigate('/Mathematics');
-            break;
-        case 'Music':
-            navigate('/Music');
-            break;
-        case 'Nursing':
-            navigate('/Nursing');
-            break;
-        case 'Physics':
-            navigate('/Physics');
-            break;
-        case 'Political Science':
-            navigate('/Political-Science');
-            break;
-        case 'Psychology':
-            navigate('/Psychology');
-            break;
-        case 'Sociology':
-            navigate('/Sociology');
-            break;
+        // case 'Economics':
+        //     navigate('/Economics');
+        //     break;
+        // case 'Education':
+        //     navigate('/Education');
+        //     break;
+        // case 'Engineering':
+        //     navigate('/Engineering');
+        //     break;
+        // case 'English':
+        //     navigate('/English');
+        //     break;
+        // case 'Environmental Science':
+        //     navigate('/Environmental-Science');
+        //     break;
+        // case 'Fine Arts':
+        //     navigate('/FineArts');
+        //     break;
+        // case 'History':
+        //     navigate('/History');
+        //     break;
+        // case 'Journalism':
+        //     navigate('/Journalism');
+        //     break;
+        // case 'Mathematics':
+        //     navigate('/Mathematics');
+        //     break;
+        // case 'Music':
+        //     navigate('/Music');
+        //     break;
+        // case 'Nursing':
+        //     navigate('/Nursing');
+        //     break;
+        // case 'Physics':
+        //     navigate('/Physics');
+        //     break;
+        // case 'Political Science':
+        //     navigate('/Political-Science');
+        //     break;
+        // case 'Psychology':
+        //     navigate('/Psychology');
+        //     break;
+        // case 'Sociology':
+        //     navigate('/Sociology');
+        //     break;
         default:
             break;
       }
