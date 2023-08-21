@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from './favicon.ico';
-
+import CategoryBox from './CategoryBox';
 import axios from 'axios';
 
 function Basics() {
@@ -43,66 +43,9 @@ function Basics() {
     }
 
     switch (selectedMajor) {
-        // case 'Biology':
-        //     navigate('/Biology');
-        //     break;
-        // case 'Business Administration':
-        //     navigate('/Business-Administration');
-        //     break;
-        // case 'Chemistry':
-        //     navigate('/Chemistry');
-        //     break;
-        // case 'Communications':
-        //     navigate('/Communications');
-        //     break;
         case 'Computer Science':
             navigate('/Computer-Science');
             break;
-        // case 'Economics':
-        //     navigate('/Economics');
-        //     break;
-        // case 'Education':
-        //     navigate('/Education');
-        //     break;
-        // case 'Engineering':
-        //     navigate('/Engineering');
-        //     break;
-        // case 'English':
-        //     navigate('/English');
-        //     break;
-        // case 'Environmental Science':
-        //     navigate('/Environmental-Science');
-        //     break;
-        // case 'Fine Arts':
-        //     navigate('/FineArts');
-        //     break;
-        // case 'History':
-        //     navigate('/History');
-        //     break;
-        // case 'Journalism':
-        //     navigate('/Journalism');
-        //     break;
-        // case 'Mathematics':
-        //     navigate('/Mathematics');
-        //     break;
-        // case 'Music':
-        //     navigate('/Music');
-        //     break;
-        // case 'Nursing':
-        //     navigate('/Nursing');
-        //     break;
-        // case 'Physics':
-        //     navigate('/Physics');
-        //     break;
-        // case 'Political Science':
-        //     navigate('/Political-Science');
-        //     break;
-        // case 'Psychology':
-        //     navigate('/Psychology');
-        //     break;
-        // case 'Sociology':
-        //     navigate('/Sociology');
-        //     break;
         default:
             break;
       }
@@ -188,266 +131,73 @@ function Basics() {
               onChange={(e) => setSelectedMajor(e.target.value)}
             >
             <option value="">Select a major</option>
-            {/* <option value="Biology">Biology</option>
-            <option value="Business Administration">Business Administration</option>
-            <option value="Chemistry">Chemistry</option>
-            <option value="Communications">Communications</option> */}
             <option value="Computer Science">Computer Science</option>
-            {/* <option value="Economics">Economics</option>
-            <option value="Education">Education</option>
-            <option value="Engineering">Engineering</option>
-            <option value="English">English</option>
-            <option value="Environmental Science">Environmental Science</option>
-            <option value="Fine Arts">Fine Arts</option>
-            <option value="History">History</option>
-            <option value="Journalism">Journalism</option>
-            <option value="Mathematics">Mathematics</option>
-            <option value="Music">Music</option>
-            <option value="Nursing">Nursing</option>
-            <option value="Physics">Physics</option>
-            <option value="Political Science">Political Science</option>
-            <option value="Psychology">Psychology</option>
-            <option value="Sociology">Sociology</option> */}
             </select>
         </div>
         </div>
 
-      <div className="category-container">
-        <div className="category-box" style={{ width: '550px' }}>
-            <h3 id='basics-title'>Volunteering</h3>
-            {categoryData.volunteering?.showForm ? (
-            <div>
-                {categoryData.volunteering.events.map((event, index) => (
-                <div key={index}>
-                    <label id='basics-labels'>How did you contribute?</label>
-                    <textarea
-                    placeholder="Describe in 2-3 sentences"
-                    value={event.description || ''}
-                    onChange={(e) =>
-                        handleInputChange('volunteering', index, 'description', e.target.value)
-                    }
-                    />
-                    {index > 0 && (
-                    <button onClick={() => handleRemoveEvent('volunteering', index)}>
-                        Remove
-                    </button>
-                    )}
-                </div>
-                ))}
-                <button onClick={() => handleAddEvent('volunteering')}>Add</button>
-                <br />
-            </div>
-            ) : (
-            <button onClick={() => addCategory('volunteering')}>
-                {categoryData.volunteering?.events.length > 0 ? 'Add More' : 'Add'}
-            </button>
-            )}
-        </div>
-        </div>
+        <CategoryBox 
+            category="Volunteering" 
+            data={categoryData.volunteering} 
+            handleInputChange={handleInputChange}
+            handleAddEvent={handleAddEvent}
+            handleRemoveEvent={handleRemoveEvent}
+            addCategory={addCategory}
+        />
 
-        <div className="category-container">
-        <div className="category-box" style={{ width: '550px' }}>
-            <h3 id='basics-title'>Internships</h3>
-            {categoryData.internships?.showForm ? (
-            <div>
-                {categoryData.internships.events.map((event, index) => (
-                <div key={index}>
-                    <label id='basics-labels'>What did you do?</label>
-                    <textarea
-                    type="text"
-                    placeholder="Describe in 2-3 sentences"
-                    value={event.description || ''}
-                    onChange={(e) =>
-                        handleInputChange('internships', index, 'description', e.target.value)
-                    }
-                    />
-                    {index > 0 && (
-                    <button onClick={() => handleRemoveEvent('internships', index)}>
-                        Remove
-                    </button>
-                    )}
-                </div>
-                ))}
-                <button onClick={() => handleAddEvent('internships')}>Add</button>
-                <br />
-            </div>
-            ) : (
-            <button onClick={() => addCategory('internships')}>
-                {categoryData.internships?.events.length > 0 ? 'Add More' : 'Add'}
-            </button>
-            )}
-        </div>
-        </div>
+        <CategoryBox 
+            category="Internships" 
+            data={categoryData.internships} 
+            handleInputChange={handleInputChange}
+            handleAddEvent={handleAddEvent}
+            handleRemoveEvent={handleRemoveEvent}
+            addCategory={addCategory}
+        />
 
-        <div className="category-container">
-        <div className="category-box" style={{ width: '550px' }}>
-            <h3 id='basics-title'>Pet Projects</h3>
-            {categoryData.pet_projects?.showForm ? (
-            <div>
-                {categoryData.pet_projects.events.map((event, index) => (
-                <div key={index}>
-                    <label id='basics-labels'>What did you do?</label>
-                    <textarea
-                    type="text"
-                    placeholder="Describe in 2-3 sentences"
-                    value={event.description || ''}
-                    onChange={(e) =>
-                        handleInputChange('pet_projects', index, 'description', e.target.value)
-                    }
-                    />
-                    {index > 0 && (
-                    <button onClick={() => handleRemoveEvent('pet_projects', index)}>
-                        Remove
-                    </button>
-                    )}
-                </div>
-                ))}
-                <button onClick={() => handleAddEvent('pet_projects')}>Add</button>
-                <br />
-            </div>
-            ) : (
-            <button onClick={() => addCategory('pet_projects')}>
-                {categoryData.pet_projects?.events.length > 0 ? 'Add More' : 'Add'}
-            </button>
-            )}
-        </div>
-        </div>
+        <CategoryBox 
+            category="Pet Projects" 
+            data={categoryData.pet_projects} 
+            handleInputChange={handleInputChange}
+            handleAddEvent={handleAddEvent}
+            handleRemoveEvent={handleRemoveEvent}
+            addCategory={addCategory}
+        />
 
-        <div className="category-container">
-        <div className="category-box" style={{ width: '550px' }}>
-            <h3 id='basics-title'>Research Projects</h3>
-            {categoryData.research_projects?.showForm ? (
-            <div>
-                {categoryData.research_projects.events.map((event, index) => (
-                <div key={index}>
-                    <label id='basics-labels'>What did you do?</label>
-                    <textarea
-                    type="text"
-                    placeholder="Describe in 2-3 sentences"
-                    value={event.description || ''}
-                    onChange={(e) =>
-                        handleInputChange('research_projects', index, 'description', e.target.value)
-                    }
-                    />
-                    {index > 0 && (
-                    <button onClick={() => handleRemoveEvent('research_projects', index)}>
-                        Remove
-                    </button>
-                    )}
-                </div>
-                ))}
-                <button onClick={() => handleAddEvent('research_projects')}>Add</button>
-                <br />
-            </div>
-            ) : (
-            <button onClick={() => addCategory('research_projects')}>
-                {categoryData.research_projects?.events.length > 0 ? 'Add More' : 'Add'}
-            </button>
-            )}
-        </div>
-        </div>
+        <CategoryBox 
+            category="Research Projects" 
+            data={categoryData.research_projects} 
+            handleInputChange={handleInputChange}
+            handleAddEvent={handleAddEvent}
+            handleRemoveEvent={handleRemoveEvent}
+            addCategory={addCategory}
+        />
 
-        <div className="category-container">
-        <div className="category-box" style={{ width: '550px' }}>
-            <h3 id='basics-title'>Jobs</h3>
-            {categoryData.internships?.showForm ? (
-            <div>
-                {categoryData.internships.events.map((event, index) => (
-                <div key={index}>
-                    <label id='basics-labels'>What did you do?</label>
-                    <textarea
-                    type="text"
-                    placeholder="Describe in 2-3 sentences"
-                    value={event.description || ''}
-                    onChange={(e) =>
-                        handleInputChange('internships', index, 'description', e.target.value)
-                    }
-                    />
-                    {index > 0 && (
-                    <button onClick={() => handleRemoveEvent('internships', index)}>
-                        Remove
-                    </button>
-                    )}
-                </div>
-                ))}
-                <button onClick={() => handleAddEvent('internships')}>Add</button>
-                <br />
-            </div>
-            ) : (
-            <button onClick={() => addCategory('internships')}>
-                {categoryData.internships?.events.length > 0 ? 'Add More' : 'Add'}
-            </button>
-            )}
-        </div>
-        </div>
+        <CategoryBox 
+            category="Jobs" 
+            data={categoryData.jobs} 
+            handleInputChange={handleInputChange}
+            handleAddEvent={handleAddEvent}
+            handleRemoveEvent={handleRemoveEvent}
+            addCategory={addCategory}
+        />
 
-        <div className="category-container">
-        <div className="category-box" style={{ width: '550px' }}>
-            <h3 id='basics-title'>Hackathons</h3>
-            {categoryData.hackathons?.showForm ? (
-            <div>
-                {categoryData.hackathons.events.map((event, index) => (
-                <div key={index}>
-                    <label id='basics-labels'>What did you do?</label>
-                    <textarea
-                    type="text"
-                    placeholder="Describe in 2-3 sentences"
-                    value={event.description || ''}
-                    onChange={(e) =>
-                        handleInputChange('hackathons', index, 'description', e.target.value)
-                    }
-                    />
-                    {index > 0 && (
-                    <button onClick={() => handleRemoveEvent('hackathons', index)}>
-                        Remove
-                    </button>
-                    )}
-                </div>
-                ))}
-                <button onClick={() => handleAddEvent('hackathons')}>Add</button>
-                <br />
-            </div>
-            ) : (
-            <button onClick={() => addCategory('hackathons')}>
-                {categoryData.hackathons?.events.length > 0 ? 'Add More' : 'Add'}
-            </button>
-            )}
-        </div>
-        </div>
+        <CategoryBox 
+            category="Hackathons" 
+            data={categoryData.hackathons} 
+            handleInputChange={handleInputChange}
+            handleAddEvent={handleAddEvent}
+            handleRemoveEvent={handleRemoveEvent}
+            addCategory={addCategory}
+        />
 
-        <div className="category-container">
-        <div className="category-box" style={{ width: '550px' }}>
-            <h3 id='basics-title'>Additional information</h3>
-            {categoryData.additional_information?.showForm ? (
-            <div>
-                {categoryData.additional_information.events.map((event, index) => (
-                <div key={index}>
-                    <label id='basics-labels'>What did you do?</label>
-                    <textarea
-                    type="text"
-                    placeholder="Describe in 2-3 sentences"
-                    value={event.description || ''}
-                    onChange={(e) =>
-                        handleInputChange('additional_information', index, 'description', e.target.value)
-                    }
-                    />
-                    {index > 0 && (
-                    <button onClick={() => handleRemoveEvent('additional_information', index)}>
-                        Remove
-                    </button>
-                    )}
-                </div>
-                ))}
-                <button onClick={() => handleAddEvent('additional_information')}>Add</button>
-                <br />
-            </div>
-            ) : (
-            <button onClick={() => addCategory('additional_information')}>
-                {categoryData.additional_information?.events.length > 0 ? 'Add More' : 'Add'}
-            </button>
-            )}
-        </div>
-        </div>
+        <CategoryBox 
+            category="Additional Information" 
+            data={categoryData.additional_information} 
+            handleInputChange={handleInputChange}
+            handleAddEvent={handleAddEvent}
+            handleRemoveEvent={handleRemoveEvent}
+            addCategory={addCategory}
+        />
 
       <button 
         onClick={handleClick}
