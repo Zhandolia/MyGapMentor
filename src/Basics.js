@@ -195,24 +195,6 @@ function Basics() {
             <h3 id='basics-title'>Volunteering</h3>
             {categoryData.volunteering?.showForm ? (
             <div>
-                {/* {categoryData.volunteering.events.map((event, index) => (
-                <div key={index}>
-                    <label id='basics-labels'>How did you contribute?</label>
-                    <input
-                    type="text"
-                    placeholder="Describe in 2-3 sentences"
-                    value={event.description || ''}
-                    onChange={(e) =>
-                        handleInputChange('volunteering', index, 'description', e.target.value)
-                    }
-                    />
-                    {index > 0 && (
-                    <button onClick={() => handleRemoveEvent('volunteering', index)}>
-                        Remove
-                    </button>
-                    )}
-                </div>
-                ))} */}
                 {categoryData.volunteering.events.map((event, index) => (
                 <div key={index}>
                     <label id='basics-labels'>How did you contribute?</label>
@@ -249,7 +231,7 @@ function Basics() {
                 {categoryData.internships.events.map((event, index) => (
                 <div key={index}>
                     <label id='basics-labels'>What did you do?</label>
-                    <input
+                    <textarea
                     type="text"
                     placeholder="Describe in 2-3 sentences"
                     value={event.description || ''}
@@ -283,7 +265,7 @@ function Basics() {
                 {categoryData.pet_projects.events.map((event, index) => (
                 <div key={index}>
                     <label id='basics-labels'>What did you do?</label>
-                    <input
+                    <textarea
                     type="text"
                     placeholder="Describe in 2-3 sentences"
                     value={event.description || ''}
@@ -317,7 +299,7 @@ function Basics() {
                 {categoryData.research_projects.events.map((event, index) => (
                 <div key={index}>
                     <label id='basics-labels'>What did you do?</label>
-                    <input
+                    <textarea
                     type="text"
                     placeholder="Describe in 2-3 sentences"
                     value={event.description || ''}
@@ -351,7 +333,7 @@ function Basics() {
                 {categoryData.internships.events.map((event, index) => (
                 <div key={index}>
                     <label id='basics-labels'>What did you do?</label>
-                    <input
+                    <textarea
                     type="text"
                     placeholder="Describe in 2-3 sentences"
                     value={event.description || ''}
@@ -385,7 +367,7 @@ function Basics() {
                 {categoryData.hackathons.events.map((event, index) => (
                 <div key={index}>
                     <label id='basics-labels'>What did you do?</label>
-                    <input
+                    <textarea
                     type="text"
                     placeholder="Describe in 2-3 sentences"
                     value={event.description || ''}
@@ -419,7 +401,7 @@ function Basics() {
                 {categoryData.additional_information.events.map((event, index) => (
                 <div key={index}>
                     <label id='basics-labels'>What did you do?</label>
-                    <input
+                    <textarea
                     type="text"
                     placeholder="Describe in 2-3 sentences"
                     value={event.description || ''}

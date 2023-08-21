@@ -541,7 +541,7 @@ h3 {
 } */
 
 .category-box {
-  width: 550px;
+  width: 550px; /* Fixed width for the container */
   margin: 0 auto;
   text-align: center;
   padding: 20px;
@@ -549,19 +549,23 @@ h3 {
   background-color: #6495ED;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
 .category-box textarea {
+  text-align: left;
   width: 100%;
+  max-width: 100%;
   padding: 10px;
   border: 1px solid #F5F5DC;
   border-radius: 5px;
   font-size: 16px;
-  text-align: center;
-  min-height: 80px;
-  resize: vertical; /* Allows users to resize the textarea vertically */
+  resize: vertical;
+  min-height: 60px;
 }
+
+
 /* 
 .category-box {
   box-sizing: border-box;
