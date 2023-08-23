@@ -32,7 +32,7 @@ function ComputerScience({categoryData, setCategoryData}){
       <div class="pp">Personal Plan</div>
 
       <div className="personal-plan">
-        <a className="personal-plan-title">pp-title</a>
+        <a className="personal-plan-title">{activities || 'pp-title'}</a>
       </div>
 
       <h2 id='activ-title'>Internships</h2>
