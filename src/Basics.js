@@ -97,6 +97,25 @@ function Basics() {
     }));
   }
 
+    // function handleInputChange(category, eventIndex, field, value) {
+    //     if (categoryData[category]) { // Checking if the category exists
+    //     setCategoryData((prevData) => ({
+    //         ...prevData,
+    //         [category]: {
+    //         ...prevData[category],
+    //         events: prevData[category].events.map((event, index) => {
+    //             if (index === eventIndex) {
+    //             return { ...event, [field]: value };
+    //             }
+    //             return event;
+    //         }),
+    //         },
+    //     }));
+    //     } else {
+    //     console.warn(`Category ${category} not found.`);
+    //     }
+    // }
+
   function handleAddEvent(category) {
     setCategoryData((prevData) => ({
       ...prevData,
@@ -175,8 +194,8 @@ function Basics() {
         />
 
         <CategoryBox 
-            category="Pet Projects" 
-            data={categoryData.pet_projects} 
+            category="Pet-Projects"
+            data={categoryData.petprojects} 
             handleInputChange={handleInputChange}
             handleAddEvent={handleAddEvent}
             handleRemoveEvent={handleRemoveEvent}
@@ -184,7 +203,7 @@ function Basics() {
         />
 
         <CategoryBox 
-            category="Research Projects" 
+            category="ResearchProjects" 
             data={categoryData.research_projects} 
             handleInputChange={handleInputChange}
             handleAddEvent={handleAddEvent}
