@@ -1,9 +1,13 @@
 import React from 'react';
 import './App.css';
 import logo from './favicon.ico';
+import { useLocation } from 'react-router-dom';
 
-function ComputerScience({categoryData, setCategoryData}){
+function ComputerScience({categoryData, setCategoryData, activities}){
+    const location = useLocation();
+    const plan = location.state.plan; // Accessing the plan passed via navigation
     console.log(categoryData)
+
     return(
     <div id="grad1" className="App">
       <div className="navbar">

@@ -33,23 +33,34 @@ function Basics() {
    const handleClick = async () => {
 
     const userInputs = gatherUserInputs();
+
     try {
-        const response = await axios.post('/api/generate-activities', userInputs);
-        const plan = response.data.activities;
-        // Navigate to the new page with the plan data
-        navigate('/plan', { state: { plan } });
+        const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+        };
+
+        const prompt = createPrompt(userInputs); // Define a function to create OpenAI prompt
+
+        const response = await axios.post('https://api.openai.com/v1/engines/davinci-codex/completions', {
+        prompt: prompt,
+        max_tokens: 150
+        }, { headers: headers });
+
+        const plan = response.data.choices[0].text;
+        navigate('/Computer-Science', { state: { plan } });
     } catch (error) {
         console.error('Error generating plan:', error);
     }
 
-    switch (selectedMajor) {
-        case 'Computer Science':
-            navigate('/Computer-Science');
-            break;
-        default:
-            break;
-      }
-  }
+        switch (selectedMajor) {
+            case 'Computer Science':
+                navigate('/Computer-Science');
+                break;
+            default:
+                break;
+        }
+    }
 
   function addCategory(category) {
     setCategoryData((prevData) => ({
