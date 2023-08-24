@@ -194,8 +194,8 @@ function Basics() {
         />
 
         <CategoryBox 
-            category="Pet-Projects"
-            data={categoryData.petprojects} 
+            category="Pet_Projects"
+            data={categoryData.pet_projects} 
             handleInputChange={handleInputChange}
             handleAddEvent={handleAddEvent}
             handleRemoveEvent={handleRemoveEvent}
@@ -203,7 +203,7 @@ function Basics() {
         />
 
         <CategoryBox 
-            category="ResearchProjects" 
+            category="Research_Projects" 
             data={categoryData.research_projects} 
             handleInputChange={handleInputChange}
             handleAddEvent={handleAddEvent}
@@ -230,7 +230,7 @@ function Basics() {
         />
 
         <CategoryBox 
-            category="Additional Information" 
+            category="Additional_Information" 
             data={categoryData.additional_information} 
             handleInputChange={handleInputChange}
             handleAddEvent={handleAddEvent}
