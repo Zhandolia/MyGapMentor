@@ -30,9 +30,17 @@ function Basics() {
         };
     };
 
+    const createPrompt = (userInputs) => {
+        // Convert userInputs into a string format suitable for your OpenAI prompt
+        // This will depend on exactly what kind of question or statement you want to send to the OpenAI API
+        // Example:
+        return `Please generate a plan for a student with the following activities: ${JSON.stringify(userInputs)}`;
+      };
+
    const handleClick = async () => {
 
     const userInputs = gatherUserInputs();
+    let plan = '';
 
     try {
         const headers = {
@@ -47,15 +55,16 @@ function Basics() {
         max_tokens: 150
         }, { headers: headers });
 
-        const plan = response.data.choices[0].text;
-        navigate('/Computer-Science', { state: { plan } });
+        // const plan = response.data.choices[0].text;
+        // navigate('/Computer-Science', { state: { plan } });
+        plan = response.data.choices[0].text; // Assign a value to 'plan' here
     } catch (error) {
         console.error('Error generating plan:', error);
     }
 
         switch (selectedMajor) {
             case 'Computer Science':
-                navigate('/Computer-Science');
+                navigate('/Computer-Science', { state: { plan } });
                 break;
             default:
                 break;
