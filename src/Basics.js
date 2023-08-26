@@ -43,33 +43,29 @@ function Basics() {
     let plan = '';
 
     try {
-        const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
-        };
-
-        const prompt = createPrompt(userInputs); // Define a function to create OpenAI prompt
-
-        const response = await axios.post('https://api.openai.com/v1/engines/davinci-codex/completions', {
-        prompt: prompt,
-        max_tokens: 150
-        }, { headers: headers });
-
-        // const plan = response.data.choices[0].text;
-        // navigate('/Computer-Science', { state: { plan } });
-        plan = response.data.choices[0].text; // Assign a value to 'plan' here
-    } catch (error) {
+        const prompt = createPrompt(userInputs);
+        const response = await axios.post('/api/generate-activites', { prompt: prompt });
+  
+        plan = response.data.choices[0].text; // You may need to adjust the response structure based on your server's response
+      } catch (error) {
         console.error('Error generating plan:', error);
-    }
-
-        switch (selectedMajor) {
-            case 'Computer Science':
-                navigate('/Computer-Science', { state: { plan } });
-                break;
-            default:
-                break;
+        if (error.response) {
+          console.log('Response:', error.response.data);
+        } else if (error.request) {
+          console.log('Request:', error.request);
+        } else {
+          console.log('Message:', error.message);
         }
-    }
+      }      
+  
+      switch (selectedMajor) {
+        case 'Computer Science':
+          navigate('/Computer-Science', { state: { plan } });
+          break;
+        default:
+          break;
+      }
+   }
 
   function addCategory(category) {
     setCategoryData((prevData) => ({
@@ -96,25 +92,6 @@ function Basics() {
       },
     }));
   }
-
-    // function handleInputChange(category, eventIndex, field, value) {
-    //     if (categoryData[category]) { // Checking if the category exists
-    //     setCategoryData((prevData) => ({
-    //         ...prevData,
-    //         [category]: {
-    //         ...prevData[category],
-    //         events: prevData[category].events.map((event, index) => {
-    //             if (index === eventIndex) {
-    //             return { ...event, [field]: value };
-    //             }
-    //             return event;
-    //         }),
-    //         },
-    //     }));
-    //     } else {
-    //     console.warn(`Category ${category} not found.`);
-    //     }
-    // }
 
   function handleAddEvent(category) {
     setCategoryData((prevData) => ({
@@ -244,7 +221,6 @@ function Basics() {
       >
         Generate Activities
       </button>
-
     </div>
   );
 }
