@@ -44,7 +44,7 @@ function Basics() {
 
     try {
         const prompt = createPrompt(userInputs);
-        const response = await axios.post('/api/generate-activites', { prompt: prompt });
+        const response = await axios.post('/api/generate-activities', { prompt: prompt });
   
         plan = response.data.choices[0].text; // You may need to adjust the response structure based on your server's response
       } catch (error) {
