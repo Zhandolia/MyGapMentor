@@ -1,4 +1,4 @@
-// open ai 
+// open ai
 import './App.css';
 import axios from 'axios';
 import React, { useState } from 'react';
@@ -51,7 +51,7 @@ function App() {
       });
   };
   
-  // the rest
+  // the rest 2.0
   const [categoryData, setCategoryData] = useState({});
   return (
     <BrowserRouter>
