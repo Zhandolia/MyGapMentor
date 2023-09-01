@@ -50,7 +50,7 @@
 
 .navbar {
   overflow: hidden;
-  background-color: #000033;
+  background-color: #FFFFFF;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -74,13 +74,13 @@
   position: relative;
   display: inline-block;
 }
-
+/* navbar color hover */
 .navbar a::after {
   content: '';
   position: absolute;
   width: 0;
   height: 2px;
-  background: #6495ED;
+  background: #1C17FF;
   bottom: 0;
   left: 50%;
   transition: all 0.3s ease-in-out;
@@ -100,9 +100,9 @@
   background-color: transparent;
 }
 
-
+/* navbar font color */
 .navbar a:visited {
-  color: #FAFBF4;
+  color: #000000;
 }
 
 h3 {
@@ -118,7 +118,7 @@ h4 {
   min-height: 100vh;
   background-color: #000085;
   /* background-image: linear-gradient(#007BFF, #000085); */
-  background: #007BFF;
+  background: #F1F5F8;
 }
 
 html {
@@ -377,8 +377,8 @@ body {
 .big-button {
   font-size: 24px;
   padding: 30px 40px;
-  background-color: #6495ED;
-  color: #F5F5DC;
+  background-color: #1C17FF;
+  color: #FFFFFF;
   border-radius: 10px;
   cursor: pointer;
   border: 2px solid #282829;
@@ -387,7 +387,7 @@ body {
 }
 
 .big-button:hover {
-  background-color: #4169E1;
+  background-color: #020080;
   color: #F5F5DC;
 }
 
@@ -397,8 +397,17 @@ h2 {
   font-weight: bold;
   margin-bottom: 50px;
   margin-top: 50px;
-  color: #F5F5DC; /* Updated font color */
+  color: #000000; /* Updated font color */
 }
+
+/* .home-title {
+  margin-bottom: 10px;
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  color: #000000;
+} */
 
 /* personal plan */
 .pp {
@@ -433,12 +442,12 @@ h3 {
   margin-bottom: 20px;
   font-size: 18px;
   font-weight: 600;
-  color: #F5F5DC; /* #77000085 */ 
+  color: #000000; /* #77000085 */ 
 }
 
 .learn-about-button {
   font-size: 24px;
-  color: #F5F5DC;
+  color: #000000;
   cursor: pointer;
   font-weight: bold;
   margin-top: 80px;
@@ -446,7 +455,7 @@ h3 {
 
 .learn-plans-button {
   font-size: 24px;
-  color: #F5F5DC;
+  color: #000000;
   cursor: pointer;
   font-weight: bold;
   margin-top: 80px;
@@ -470,7 +479,7 @@ h3 {
 .nFac{
   margin-top: 160px;
   font-size: 14px;
-  color: #F5F5DC;
+  color: #000000;
 }
 
 #gateaway{

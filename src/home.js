@@ -3,28 +3,28 @@ import './App.css';
 import {Link} from "react-router-dom";
 import logo from './favicon.ico';
 
-const Loading = () => {
-  return (
-    <div className="loading">
-      <div className="spinner"></div> {/* Style this as you wish */}
-    </div>
-  );
-};
+// const Loading = () => {
+//   return (
+//     <div className="loading">
+//       <div className="spinner"></div> {/* Style this as you wish */}
+//     </div>
+//   );
+// };
 
 function Home() {
-  const [loading, setLoading] = useState(true); // Add this line
+  // const [loading, setLoading] = useState(true); // Add this line
 
-  useEffect(() => {
-    // Simulate loading
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000); // 2 seconds delay, adjust as needed
-  }, []);
+  // useEffect(() => {
+  //   // Simulate loading
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 1000); // 2 seconds delay, adjust as needed
+  // }, []);
 
-  // Show loading spinner if loading
-  if (loading) {
-    return <Loading />;
-  }
+  // // Show loading spinner if loading
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   return (
     <div id="grad1" className="App">
@@ -38,10 +38,10 @@ function Home() {
                     </div>
                 </div>
                 <div className="navbar-center">
-                    <a href="about">About us</a>
-                    <a href="stories">Success Stories</a>
-                    <a href="plans">Plans</a>
-                    <a href="contact">Contact us</a>
+                    <a href="about">Company</a>
+                    <a href="stories">Stories</a>
+                    <a href="plans">Pricing</a>
+                    <a href="contact">Contact</a>
                 </div>
 
                 <div className="navbar-right">
