@@ -2,9 +2,10 @@
 import './App.css';
 import axios from 'axios';
 import React, { useState } from 'react';
-// the rest
+// defaults
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ScrollToTop from './ScrollToTop';
+// pages
 import Home from './home';
 import About from './About';
 import Stories from './Stories';
@@ -12,6 +13,7 @@ import Plans from './Plans';
 import Contact from './Contact';
 import Account from './Account';
 import Basics from './Basics';
+// majors
 import ComputerScience from './Computer-Science';
 import Biology from './Biology';
 import BusinessAdministration from './Business-Administration';
@@ -32,6 +34,8 @@ import Physics from './Physics';
 import PoliticalScience from './Political-Science';
 import Psychology from './Psychology';
 import Sociology from './Sociology';
+// animation
+import movFile from './fungi.mov';
 
 function App() {
   // open ai
@@ -56,6 +60,9 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <video id="videoBackground" autoPlay loop muted>
+        <source src={movFile} type="video/quicktime" />
+      </video>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />

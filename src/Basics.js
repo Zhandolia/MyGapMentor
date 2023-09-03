@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from './favicon.ico';
+import logo from './NEW_LOGO.png';
 import CategoryBox from './CategoryBox';
 import axios from 'axios';
 
@@ -123,7 +123,7 @@ function Basics() {
               <a href="/">
                 <img src={logo} alt="Logo" className="navbar-logo" />
               </a>
-              <a href="/">MyGapMentor</a>
+              {/* <a href="/">MyGapMentor</a> */}
             </div>
           </div>
           <div className="navbar-center">

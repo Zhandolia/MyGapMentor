@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #F5F5DC;
+  color: #FFFFFF;
 }
 
 .App-link {
@@ -131,7 +131,7 @@ html {
   padding-right: 40px;
   font-size: 19px;
   text-align: left;
-  color: #F5F5DC;
+  color: #FFFFFF;
 }
 
 .about-list li {
@@ -161,7 +161,7 @@ html {
 .plan-box {
   width: 350px;
   height: auto;
-  border: 1px solid #F5F5DC;
+  border: 1px solid #FFFFFF;
   padding: 30px;
   margin: 30px;
   text-align: left;
@@ -169,7 +169,7 @@ html {
   flex-direction: column;
   justify-content: space-around;
   background-color: #6495ED;
-  color: #F5F5DC;
+  color: #FFFFFF;
   box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
   border: none;
   border-radius: 10px;
@@ -181,14 +181,14 @@ html {
 }
 
 .plan-box h3 {
-  color: #F5F5DC;
+  color: #FFFFFF;
   text-decoration: none;
   font-size: 1.5em;
   margin-bottom: 20px;
 }
 
 .plan-box p {
-  color: #F5F5DC;
+  color: #FFFFFF;
   padding: 20px;
   flex-grow: 1;
   line-height: 1.5;
@@ -198,7 +198,7 @@ html {
 
 .plan-box button {
   background-color: #282829;
-  color: #F5F5DC;
+  color: #FFFFFF;
   border: none;
   padding: 10px 20px;
   margin-top: 20px;
@@ -246,7 +246,7 @@ body {
 
 .contact-form button {
   background-color: #282829;
-  color: #F5F5DC;
+  color: #FFFFFF;
   border: none;
   padding: 10px 20px;
   margin-top: 10px;
@@ -275,7 +275,7 @@ body {
   width: calc(26% - 20px);
   margin: 0 10px 20px;
   background-color: #6495ED;
-  color: #F5F5DC;
+  color: #FFFFFF;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
@@ -309,7 +309,7 @@ body {
   background-color: #6495ED;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-  color: #F5F5DC;
+  color: #FFFFFF;
   line-height: 1.6;
 }
 
@@ -353,7 +353,7 @@ body {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #F5F5DC;
+  border: 1px solid #FFFFFF;
   box-sizing: border-box;
 }
 
@@ -361,7 +361,7 @@ body {
   width: 100%;
   padding: 10px;
   background-color: #6ECB5A;
-  color: #F5F5DC;
+  color: #FFFFFF;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -388,7 +388,7 @@ body {
 
 .big-button:hover {
   background-color: #020080;
-  color: #F5F5DC;
+  color: #FFFFFF;
 }
 
 h2 {
@@ -462,7 +462,7 @@ h3 {
 }
 
 #basics-title {
-  color: #F5F5DC;
+  color: #FFFFFF;
   margin-top: 10px;
   margin-bottom: 40px;
 }
@@ -474,7 +474,7 @@ h3 {
 }
 
 #gateaway{
-  color: #F5F5DC;
+  color: #FFFFFF;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -487,7 +487,7 @@ h3 {
 
 .category-box {
   max-width: 600px;
-  border: 1px solid #F5F5DC;
+  border: 1px solid #FFFFFF;
   padding: 20px;
   margin-bottom: 20px;
   background-color: #f5f5f5;
@@ -503,7 +503,7 @@ h3 {
 
 .category-box button {
   background-color: #4caf50;
-  color: #F5F5DC;
+  color: #FFFFFF;
   border: none;
   padding: 10px 20px;
   font-size: 14px;
@@ -516,7 +516,7 @@ h3 {
 }
 
 #basics-labels {
-  color: #F5F5DC;
+  color: #FFFFFF;
   font-weight: 500;
   font-size: 15px;
 }
@@ -545,7 +545,7 @@ h3 {
   width: 100%;
   max-width: 100%;
   padding: 10px;
-  border: 1px solid #F5F5DC;
+  border: 1px solid #FFFFFF;
   border-radius: 5px;
   font-size: 16px;
   resize: vertical;
@@ -559,7 +559,7 @@ h3 {
 .category-box input[type="text"] {
   width: 100%;
   padding: 10px;
-  border: 1px solid #F5F5DC;
+  border: 1px solid #FFFFFF;
   border-radius: 5px;
   font-size: 16px;
   text-align: center;
@@ -572,7 +572,7 @@ h3 {
   margin-top: 10px;
   padding: 10px 20px;
   background-color: #4caf50;
-  color: #F5F5DC;
+  color: #FFFFFF;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -652,7 +652,7 @@ h3 {
   margin-top: 20px;
   padding: 10px 20px;
   background-color: #4caf50;
-  color: #F5F5DC;
+  color: #FFFFFF;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -729,7 +729,7 @@ h3 {
 }
 
 .item {
-  background-color: #F5F5DC;
+  background-color: #FFFFFF;
   padding: 10px;
   margin-bottom: 10px;
 }
@@ -898,6 +898,12 @@ h3 {
   z-index: 9999; 
 }
 
-.loading-spinner {
- 
+#videoBackground {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1; /* Sit behind content */
+  object-fit: cover;
 }

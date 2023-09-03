@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import logo from './favicon.ico';
-import Loading from './Loading';
+import logo from './NEW_LOGO.png';
+// import Loading from './Loading';
 
 function Account() {
   const [loginData, setLoginData] = useState({ email: '', password: '' });
@@ -31,19 +31,19 @@ function Account() {
     console.log('Registration Form Submitted:', registrationData);
   };
 
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        // Simulate loading
-        setTimeout(() => {
-        setLoading(false);
-        }, 1000); // 2 seconds delay, adjust as needed
-    }, []);
+  //   useEffect(() => {
+  //       // Simulate loading
+  //       setTimeout(() => {
+  //       setLoading(false);
+  //       }, 1000); // 2 seconds delay, adjust as needed
+  //   }, []);
 
-    // Show loading spinner if loading
-    if (loading) {
-        return <Loading />;
-    }
+  //   // Show loading spinner if loading
+  //   if (loading) {
+  //       return <Loading />;
+  //   }
 
   return (
     <div id="grad1" className="App">
@@ -53,7 +53,7 @@ function Account() {
           <a href="/">
             <img src={logo} alt="Logo" className="navbar-logo" />
           </a>
-          <a href="/">MyGapMentor</a>
+          {/* <a href="/">MyGapMentor</a> */}
         </div>
         </div>
         <div className="navbar-center">
