@@ -400,15 +400,6 @@ h2 {
   color: #000000; /* Updated font color */
 }
 
-/* .home-title {
-  margin-bottom: 10px;
-  font-size: 40px;
-  font-weight: bold;
-  margin-bottom: 50px;
-  margin-top: 50px;
-  color: #000000;
-} */
-
 /* personal plan */
 .pp {
   margin-bottom: 10px;
@@ -416,14 +407,14 @@ h2 {
   font-weight: bold;
   margin-top: 50px;
   color: white; /* Changed text color to white */
-  background-color: #000033; /* Added background color */
+  background-color: #6495ED; /* Added background color */
   width: 100%; /* Makes the container stretch horizontally */
   padding: 10px; /* Adds some padding inside the container */
   box-sizing: border-box; /* Ensures padding doesn't affect the total width */
 }
 
 .personal-plan {
-  border: 2px solid #F5F5DC;
+  /* border: 2px solid #F5F5DC; */
   width: 400px;
   color: #000;
   margin-left: auto;
@@ -431,9 +422,9 @@ h2 {
   margin-top: 40px;
   margin-bottom: 20px;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  background-color: #F5F5DC;
+  background-color: #FFFFFF;
   text-align: left;
 }
 
@@ -674,7 +665,7 @@ h3 {
 }
 
 .cs-internship {
-  border: 2px solid #F5F5DC;
+  /* border: 2px solid #F5F5DC; */
   width: 400px;
   color: #000;
   margin-left: auto;
@@ -682,9 +673,9 @@ h3 {
   margin-top: 40px;
   margin-bottom: 20px;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  background-color: #F5F5DC;
+  background-color: #FFFFFF;
   text-align: left;
 }
 
@@ -700,10 +691,10 @@ h3 {
 
 #activ-title {
   font-size: 27px;
-  color: #F5F5DC; /* You may want to change this to something more visible against the dark background */
+  color: #FFFFFF; /* You may want to change this to something more visible against the dark background */
   text-decoration: underline;
   font-style: italic;
-  background-color: #000033; /* Background color */
+  background-color: #6495ED; /* Background color */
   width: 100%; /* Stretch across the full width */
   padding: 10px; /* Some padding to give space around the text */
   box-sizing: border-box; /* Ensures padding doesn't affect the total width */
@@ -746,7 +737,7 @@ h3 {
 /* Pet projects */
 
 .cs-pet {
-  border: 2px solid #F5F5DC;
+  /* border: 2px solid #F5F5DC; */
   width: 400px;
   color: #000;
   margin-left: auto;
@@ -754,9 +745,9 @@ h3 {
   margin-top: 40px;
   margin-bottom: 20px;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  background-color: #F5F5DC;
+  background-color: #FFFFFF;
   text-align: left;
 }
 
@@ -778,7 +769,7 @@ h3 {
 /* Hackathons */
 
 .cs-hackathon {
-  border: 2px solid #F5F5DC;
+  /* border: 2px solid #F5F5DC; */
   width: 400px;
   color: #000;
   margin-left: auto;
@@ -786,9 +777,9 @@ h3 {
   margin-top: 40px;
   margin-bottom: 20px;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  background-color: #F5F5DC;
+  background-color: #FFFFFF;
   text-align: left;
 }
 
@@ -810,7 +801,7 @@ h3 {
 /* Coding Competitions */
 
 .cs-research {
-  border: 2px solid #F5F5DC;
+  /* border: 2px solid #F5F5DC; */
   width: 400px;
   color: #000;
   margin-left: auto;
@@ -818,9 +809,9 @@ h3 {
   margin-top: 40px;
   margin-bottom: 20px;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  background-color: #F5F5DC;
+  background-color: #FFFFFF;
   text-align: left;
 }
 
@@ -842,7 +833,7 @@ h3 {
 /* Bootcamps */
 
 .cs-bootcamp {
-  border: 2px solid #F5F5DC;
+  /* border: 2px solid #F5F5DC; */
   width: 400px;
   color: #000;
   margin-left: auto;
@@ -850,9 +841,9 @@ h3 {
   margin-top: 40px;
   margin-bottom: 20px;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  background-color: #F5F5DC;
+  background-color: #FFFFFF;
   text-align: left;
 }
 
