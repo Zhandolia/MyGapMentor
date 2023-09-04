@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import logo from './favicon.ico';
 import { useLocation } from 'react-router-dom';
 
 function ComputerScience({categoryData, setCategoryData, activities}){
+  useEffect(() => {
+    document.title = 'Computer Science - MyGapMentor';
+  }, []);
+
   const location = useLocation();
   const plan = location.state?.plan || "Plan not found";
 

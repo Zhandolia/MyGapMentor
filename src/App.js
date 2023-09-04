@@ -35,7 +35,7 @@ import PoliticalScience from './Political-Science';
 import Psychology from './Psychology';
 import Sociology from './Sociology';
 // animation
-import movFile from './fungi.mov';
+import mp4File from './fungi.mp4';
 
 function App() {
   // open ai
@@ -61,7 +61,7 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <video id="videoBackground" autoPlay loop muted>
-        <source src={movFile} type="video/quicktime" />
+        <source src={mp4File} type="video/quicktime" />
       </video>
       <Routes>
         <Route path="/" element={<Home />} />

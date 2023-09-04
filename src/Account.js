@@ -4,6 +4,10 @@ import logo from './NEW_LOGO.png';
 // import Loading from './Loading';
 
 function Account() {
+  useEffect(() => {
+    document.title = 'Account - MyGapMentor';
+  }, []);
+
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [registrationData, setRegistrationData] = useState({
     name: '',

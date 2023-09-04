@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { Link } from 'react-router-dom';
 import logo from './NEW_LOGO.png';
-import movFile from './fungi.mov';
+import mp4File from './fungi.mp4';
 
 function Home() {
+    useEffect(() => {
+        document.title = 'Home - MyGapMentor';
+      }, []);
+
   return (
     <div id="grad1" className="App">
       {/* Add this video tag */}
       <video id="videoBackground" autoPlay loop muted>
-        <source src={`${process.env.PUBLIC_URL}/fungi.mov`} type="video/quicktime" />
+        <source src={mp4File} type="video/mp4" />
       </video>
 
       <div id="navbar" className="navbar">

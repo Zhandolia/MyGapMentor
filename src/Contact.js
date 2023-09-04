@@ -4,6 +4,10 @@ import logo from './NEW_LOGO.png';
 // import Loading from './Loading';
 
 function Contact() {
+  useEffect(() => {
+    document.title = 'Contact - MyGapMentor';
+  }, []);
+
   // const [loading, setLoading] = useState(true);
 
   // useEffect(() => {

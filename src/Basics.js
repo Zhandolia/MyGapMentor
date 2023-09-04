@@ -5,6 +5,10 @@ import CategoryBox from './CategoryBox';
 import axios from 'axios';
 
 function Basics() {
+  useEffect(() => {
+    document.title = 'Basics - MyGapMentor';
+  }, []);
+
   const navigate = useNavigate();
   const [selectedMajor, setSelectedMajor] = useState('');
 
