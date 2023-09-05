@@ -374,22 +374,72 @@ body {
 
 /* Start here button */
 
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;  /* or whatever margin you need */
+  margin-bottom: 40px;  /* or whatever margin you need */
+}
+
 .big-button {
-  font-size: 24px;
-  padding: 30px 40px;
+  font-size: 20px;
+  padding: 13px 36px;
   background-color: #1C17FF;
   color: #FFFFFF;
   border-radius: 10px;
   cursor: pointer;
   border: 2px solid #282829;
   font-weight: bold;
-  margin-top: 40px;
 }
 
 .big-button:hover {
   background-color: #020080;
   color: #FFFFFF;
 }
+
+.maximize-h2 {
+  font-size: 30px;
+}
+
+.highlighted {
+  display: block;
+  color: #1C17FF;
+  font-size: 1.2em;
+}
+
+.highlighted::selection {
+  color: auto;
+  background: #ADDBF1;
+}
+
+.transform-h3 {
+  margin-top: 50px;
+  font-size: 15px;
+}
+
+.major-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.major-button {
+  cursor: pointer;
+  color: #1C17FF;
+  background-color: #FFFFFF;
+  padding: 15px 30px;
+  margin: 10px;
+  border-radius: 10px;
+  border: 2px solid #1413CC;
+  font-weight: bold;
+  text-align: center;
+}
+
+.major-button:hover {
+  background-color: #F1F5F8;
+}
+
 
 h2 {
   margin-bottom: 10px;
@@ -904,6 +954,6 @@ h3 {
   bottom: 0;
   min-width: 100%;
   min-height: 100%;
-  z-index: -1; /* Sit behind content */
+  z-index: -1;
   object-fit: cover;
 }

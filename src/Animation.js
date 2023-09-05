@@ -4,7 +4,6 @@ import './Animation.css';
 
 const Animation = () => {
   useEffect(() => {
-    // Add the JavaScript code here, for example:
     // new ParticleNetworkAnimation().init($('.particle-network-animation')[0]);
     (function() {
 
@@ -312,14 +311,17 @@ const Animation = () => {
             return array[Math.floor(Math.random()*array.length)];
         };
     
-    pna = new ParticleNetworkAnimation();	pna.init($('.particle-network-animation')[0]);
-    
+        const pna = new ParticleNetworkAnimation(); 
+        pna.init($('.particle-network-animation')[0]);
+        
     }());
     
   }, []);
 
   return (
     <div className="particle-network-animation">
+        test
+        <canvas></canvas>
       <div className="glow glow-1"></div>
       <div className="glow glow-2"></div>
       <div className="glow glow-3"></div>

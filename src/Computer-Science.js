@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import logo from './favicon.ico';
+import logo from './NEW_LOGO.png';
 import { useLocation } from 'react-router-dom';
 
 function ComputerScience({categoryData, setCategoryData, activities}){
@@ -19,7 +19,7 @@ function ComputerScience({categoryData, setCategoryData, activities}){
           <a href="/">
             <img src={logo} alt="Logo" className="navbar-logo" />
           </a>
-          <a href="/">MyGapMentor</a>
+          {/* <a href="/">MyGapMentor</a> */}
         </div>
         </div>
         <div className="navbar-center">
@@ -129,11 +129,7 @@ function ComputerScience({categoryData, setCategoryData, activities}){
         <p><strong>Application Deadline:</strong> October 31</p>
         <p><strong>Duration:</strong> Varies</p>
         <p>
-        {
-        "The NSA provides a number of opportunities for students, including internships and " +
-        "scholarships. (Bear in mind that the Agency selects candidates for its programs up to a year in " +
-        "advance, so students should apply early for a better chance at acceptance.) "
-        }
+        The NSA provides a number of opportunities for students, including internships and scholarships. Bear in mind that the Agency selects candidates for its programs up to a year in advance, so students should apply early for a better chance at acceptance.
         </p>
         <p>
         {
