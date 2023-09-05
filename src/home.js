@@ -18,8 +18,6 @@ function Home() {
     }
 
     const handleMajorSelection = (major) => {
-        // Do something to save the user's selected major, e.g., save it to state or local storage
-        // Navigate to the /basics page
         navigate(`/basics?major=${major}`);
       };
 
@@ -50,21 +48,6 @@ function Home() {
         </div>
       </div>
 
-      {/* <h2>Welcome to MyGapMentor</h2>
-      <h3 id='gateway'>Your Gateway to Maximizing Your Gap Year Potential!</h3>
-      <div className='basicdiv'>
-        <a href="/basics" className="big-button-link">
-          <button className="big-button">Ready to Start Planning Your Resume with us? Click Here!</button>
-        </a>
-        <Link to="about" className="learn-about-button">Learn more About us &#8594;</Link>
-        <Link to="plans" className="learn-plans-button">Get to know our Plans &#8594;</Link>
-        <h3 className="nFac">Powered by nFactorial 2023</h3>
-      </div> */}
-
-        {/* <h2 className='maximize-h2'>
-        Maximizing Your <span className='highlighted'>Potential with AI </span>
-        </h2> */}
-    
         <h2 className='maximize-h2'>
         Long-Term Planning for Your <span className='highlighted'>Academic Future </span>
         </h2>
@@ -78,6 +61,7 @@ function Home() {
         </h3>
 
         <div className="major-container">
+
             <div className="major-button" onClick={() => handleMajorSelection("Computer Science")}>
                 Computer Science
             </div>

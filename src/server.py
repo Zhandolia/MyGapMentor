@@ -10,11 +10,11 @@ load_dotenv()
 openai.api_key = os.getenv('REACT_APP_OPENAI_API_KEY')
 
 app = Flask(__name__)
-CORS(app)  # This will handle CORS and allow requests from your frontend
+CORS(app)
 
 @app.route('/api/generate-activities', methods=['POST'])
 def generate_activities():
-    user_input = request.json['userInput']
+    user_input = request.json['prompt']
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -28,4 +28,4 @@ def generate_activities():
     return jsonify({'activities': activities})
 
 if __name__ == "__main__":
-    app.run(debug=True, port=3000)  # Explicitly set the port to 3000
+    app.run(debug=True, port=3000)

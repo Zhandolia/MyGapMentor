@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logo from './NEW_LOGO.png';
 import CategoryBox from './CategoryBox';
 import axios from 'axios';
 
 function Basics() {
-  useEffect(() => {
-    document.title = 'Basics - MyGapMentor';
-  }, []);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const [selectedMajor, setSelectedMajor] = useState('');
+
+  useEffect(() => {
+    if (location.state && location.state.selectedMajor) {
+      setSelectedMajor(location.state.selectedMajor);
+    }
+    document.title = 'Basics - MyGapMentor';
+  }, [location.state]);
 
   const [categoryData, setCategoryData] = useState({ 
     volunteering: { showForm: true, events: [{}] }, 
@@ -49,10 +54,10 @@ function Basics() {
     try {
         const prompt = createPrompt(userInputs);
         const response = await axios.post('/api/generate-activities', { prompt: prompt });
-  
-        plan = response.data.choices[0].text; // You may need to adjust the response structure based on your server's response
+        plan = response.data.activities;
       } catch (error) {
         console.error('Error generating plan:', error);
+        // alert('Sorry, we couldn\'t generate your plan at this time. Please try again later.');
         if (error.response) {
           console.log('Response:', error.response.data);
         } else if (error.request) {
@@ -60,7 +65,7 @@ function Basics() {
         } else {
           console.log('Message:', error.message);
         }
-      }      
+      }
   
       switch (selectedMajor) {
         case 'Computer Science':
@@ -69,6 +74,11 @@ function Basics() {
         default:
           break;
       }
+
+      if (!selectedMajor) {
+        alert('Please select a major before proceeding.');
+        return;
+    }    
    }
 
   function addCategory(category) {
