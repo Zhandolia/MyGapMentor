@@ -378,8 +378,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 40px;  /* or whatever margin you need */
-  margin-bottom: 40px;  /* or whatever margin you need */
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .big-button {
@@ -389,12 +389,13 @@ body {
   color: #FFFFFF;
   border-radius: 10px;
   cursor: pointer;
-  border: 2px solid #282829;
+  border: 2px solid #1C17FF;
   font-weight: bold;
 }
 
 .big-button:hover {
   background-color: #020080;
+  border: 2px solid #1C17FF;
   color: #FFFFFF;
 }
 

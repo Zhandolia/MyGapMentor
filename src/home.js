@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import './App.css';
-import { Link } from 'react-router-dom';
 import logo from './NEW_LOGO.png';
 // import mp4File from './fungi.mp4';
 // import Animation from './Animation';

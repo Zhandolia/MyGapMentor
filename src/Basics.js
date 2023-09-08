@@ -46,40 +46,47 @@ function Basics() {
         return `Please generate a plan for a student with the following activities: ${JSON.stringify(userInputs)}`;
       };
 
-   const handleClick = async () => {
-
-    const userInputs = gatherUserInputs();
-    let plan = '';
-
-    try {
-        const prompt = createPrompt(userInputs);
-        const response = await axios.post('/api/generate-activities', { prompt: prompt });
-        plan = response.data.activities;
-      } catch (error) {
-        console.error('Error generating plan:', error);
-        // alert('Sorry, we couldn\'t generate your plan at this time. Please try again later.');
-        if (error.response) {
-          console.log('Response:', error.response.data);
-        } else if (error.request) {
-          console.log('Request:', error.request);
-        } else {
-          console.log('Message:', error.message);
-        }
-      }
-  
-      switch (selectedMajor) {
-        case 'Computer Science':
-          navigate('/Computer-Science', { state: { plan } });
-          break;
-        default:
-          break;
-      }
-
-      if (!selectedMajor) {
+  const handleClick = async () => {
+    // 1. Validate user input
+    if (!selectedMajor) {
         alert('Please select a major before proceeding.');
         return;
-    }    
-   }
+    }
+
+    // 2. Collect user input
+    const userInputs = gatherUserInputs();
+
+    // Validate the inputs further if required
+    if (!userInputs) {
+        alert('Please enter all required information.');
+        return;
+    }
+
+    // 3. Generate the prompt for OpenAI API
+    const prompt = createPrompt(userInputs);
+
+    let plan = '';
+    
+    try {
+        // 4. Send the prompt to your server, which will in turn send it to OpenAI API
+        const response = await axios.post('/api/generate-activities', { prompt: prompt });
+
+        // 5. Receive the generated plan
+        plan = response.data.activities;
+    } catch (error) {
+        console.error('Error generating plan:', error);
+        // Handle errors appropriately
+    }
+  
+    // 6. Navigate to the next page and pass the generated plan
+    switch (selectedMajor) {
+        case 'Computer Science':
+            navigate('/Computer-Science', { state: { plan } });
+            break;
+        default:
+            break;
+    }
+}
 
   function addCategory(category) {
     setCategoryData((prevData) => ({
