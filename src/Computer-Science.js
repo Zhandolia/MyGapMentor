@@ -3,7 +3,9 @@ import './App.css';
 import logo from './NEW_LOGO.png';
 import { useLocation } from 'react-router-dom';
 
-function ComputerScience({categoryData, setCategoryData, activities}){
+// function ComputerScience({categoryData, setCategoryData, activities}){
+function ComputerScience(){
+
   useEffect(() => {
     document.title = 'Computer Science - MyGapMentor';
   }, []);
@@ -19,14 +21,13 @@ function ComputerScience({categoryData, setCategoryData, activities}){
           <a href="/">
             <img src={logo} alt="Logo" className="navbar-logo" />
           </a>
-          {/* <a href="/">MyGapMentor</a> */}
         </div>
         </div>
         <div className="navbar-center">
-          <a href="about">About us</a>
-          <a href="stories">Success Stories</a>
-          <a href="plans">Plans</a>
-          <a href="contact">Contact us</a>
+          <a href="about">Company</a>
+          <a href="stories">Stories</a>
+          <a href="plans">Pricing</a>
+          <a href="contact">Contact</a>
         </div>
 
         <div className="navbar-right">
@@ -85,7 +86,6 @@ function ComputerScience({categoryData, setCategoryData, activities}){
           <li>Applicants must be a full-time student (high school through graduate-level) or a part-time college-level student enrolled in a minimum of 6 semester hours.</li>
           <li>Opportunities are available at the high school, undergraduate, graduate, and educator levels.</li>
           <li>NASA also sponsors interns at the Jet Propulsion Laboratory (JPL) in California. To learn more or apply, click <a target='_blank' href="https://www.jpl.nasa.gov/edu/intern/" class="my-link">here</a>.</li>
-
         </ul>
       </div>
 

@@ -34,17 +34,17 @@ function Plans(){
                 </div>
             </div>
             <div className="navbar-center">
-                <a href="about">About us</a>
-                <a href="stories">Success Stories</a>
-                <a href="plans">Plans</a>
-                <a href="contact">Contact us</a>
+                <a href="about">Company</a>
+                <a href="stories">Stories</a>
+                <a href="plans">Pricing</a>
+                <a href="contact">Contact</a>
             </div>
 
             <div className="navbar-right">
                 <a href="account">Account</a>
             </div>
         </div>
-      <h2>Plans</h2>
+      <h2>Pricing</h2>
         <div class="plans-container">
             <div class="plan-box">
                 <h3>Standard</h3>

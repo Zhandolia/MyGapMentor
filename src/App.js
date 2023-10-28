@@ -42,18 +42,18 @@ function App() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-    axios 
-      .post("https://localhost:8080/chat", { prompt })
-      .then((res)=>{ 
-        setResponse(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  //   axios 
+  //     .post("https://localhost:8080/chat", { prompt })
+  //     .then((res)=>{ 
+  //       setResponse(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   
   // the rest 2.0
   const [categoryData, setCategoryData] = useState({});

@@ -34,17 +34,17 @@ function Stories() {
           </div>
           </div>
           <div className="navbar-center">
-            <a href="about">About us</a>
-            <a href="stories">Success Stories</a>
-            <a href="plans">Plans</a>
-            <a href="contact">Contact us</a>
+            <a href="about">Company</a>
+            <a href="stories">Stories</a>
+            <a href="plans">Pricing</a>
+            <a href="contact">Contact</a>
           </div>
 
           <div className="navbar-right">
           <a href="account">Account</a>
       </div>
         </div>
-        <h2>Success Stories</h2>
+        <h2>Stories</h2>
         <div className="stories-container">
             <div className="story-card">
                 <img src="/barack_columbia.jpg" alt="barack_columbia"/>

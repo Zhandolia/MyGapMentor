@@ -34,17 +34,17 @@ function Contact() {
               </div>
             </div>
             <div className="navbar-center">
-              <a href="about">About us</a>
-              <a href="stories">Success Stories</a>
-              <a href="plans">Plans</a>
-              <a href="contact">Contact us</a>
+              <a href="about">Company</a>
+              <a href="stories">Stories</a>
+              <a href="plans">Pricing</a>
+              <a href="contact">Contact</a>
             </div>
 
             <div className="navbar-right">
               <a href="account">Account</a>
           </div>
           </div>
-          <h2>Contact us</h2>
+          <h2>Contact</h2>
           <div className="contact-container">
               <h4>Feel free to email us at:</h4>
               <p>mygapmentor@gmail.com</p>
