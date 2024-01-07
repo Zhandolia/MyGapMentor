@@ -3,7 +3,6 @@ import './App.css';
 import logo from './NEW_LOGO.png';
 import { useLocation } from 'react-router-dom';
 
-// function ComputerScience({categoryData, setCategoryData, activities}){
 function ComputerScience(){
 
   useEffect(() => {
@@ -40,7 +39,7 @@ function ComputerScience(){
     <div class="pp">Personal Plan</div>
 
     <div className="personal-plan">
-      <a className="personal-plan-title">{plan}</a>
+      <p>{plan}</p>
     </div>
 
     <h2 id='activ-title'>Internships</h2>
