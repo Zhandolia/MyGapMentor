@@ -204,13 +204,19 @@ export function Overview() {
 export function Discover() {
   const { state, save, notify } = useWorkspace();
   const [params, setParams] = useSearchParams(),
-    [query, setQuery] = useState(""),
+    [query, setQuery] = useState(params.get("q") || ""),
     [category, setCategory] = useState("All types"),
     [major, setMajor] = useState(
-      params.get("major") || state.profile?.major || "All majors",
+      params.get("major") ||
+        (params.has("q") ? "All majors" : state.profile?.major) ||
+        "All majors",
     ),
     [format, setFormat] = useState("Any"),
-    [free, setFree] = useState(state.profile?.freeOnly || false),
+    [free, setFree] = useState(
+      params.has("q") || params.has("major")
+        ? false
+        : state.profile?.freeOnly || false,
+    ),
     [available, setAvailable] = useState(true),
     [compared, setCompared] = useState([]),
     [showCompare, setShowCompare] = useState(false);
@@ -229,7 +235,7 @@ export function Discover() {
         (format === "Any" || o.format === format) &&
         (!free || o.cost === "Free") &&
         (!available || !o.blocked) &&
-        `${o.title} ${o.organization} ${o.summary} ${o.majors.join(" ")}`
+        `${o.title} ${o.organization} ${o.category} ${o.summary} ${o.majors.join(" ")}`
           .toLowerCase()
           .includes(query.toLowerCase()),
     ),

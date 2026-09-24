@@ -12,6 +12,7 @@ import { MAJORS } from "./catalog";
 import { emptyState, validateState } from "./engine";
 import { Context, Icon } from "./components";
 import { Overview, Discover } from "./Explore";
+import Landing from "./Landing";
 import { Plan, Tracker, Evidence } from "./Workspace";
 import { Profile, Mentor, Guides } from "./Profile";
 import logo from "./NEW_LOGO.png";
@@ -40,6 +41,7 @@ function Shell() {
     [toast, setToast] = useState("");
   const location = useLocation(),
     main = useRef();
+  const isHome = location.pathname === "/";
   useEffect(() => {
     if (blocked) return;
     try {
@@ -53,7 +55,10 @@ function Shell() {
   }, [state, blocked]);
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = `${location.pathname.split("/")[1] || "Overview"} · MyGapMentor`;
+    document.title =
+      location.pathname === "/"
+        ? "MyGapMentor — Find your next step"
+        : `${location.pathname.split("/")[1]} · MyGapMentor`;
     main.current?.focus({ preventScroll: true });
   }, [location.pathname]);
   useEffect(() => {
@@ -109,53 +114,57 @@ function Shell() {
       >
         Skip to content
       </a>
-      <div className="workspace">
-        <aside className="sidebar">
-          <Link to="/" className="brand" aria-label="MyGapMentor home">
-            <img src={logo} alt="MyGapMentor" />
-          </Link>
-          <div className="nav-caption">YOUR GAP YEAR, WITH DIRECTION</div>
-          <nav aria-label="Main navigation">
-            {[
-              ["/", "overview", "Overview"],
-              ["/discover", "discover", "Opportunities"],
-              ["/plan", "plan", "My plan"],
-              ["/tracker", "tracker", "My tracker"],
-              ["/evidence", "evidence", "Evidence log"],
-              ["/mentor", "mentor", "Mentor guide"],
-            ].map(([to, icon, label]) => (
-              <NavLink key={to} to={to} end={to === "/"}>
-                <Icon name={icon} />
-                <span>{label}</span>
-                {to === "/tracker" && Object.keys(state.saved).length > 0 && (
-                  <span className="nav-count">
-                    {Object.keys(state.saved).length}
-                  </span>
-                )}
+      <div className={isHome ? "landing-shell" : "workspace"}>
+        {!isHome && (
+          <aside className="sidebar">
+            <Link to="/" className="brand" aria-label="MyGapMentor home">
+              <img src={logo} alt="MyGapMentor" />
+            </Link>
+            <div className="nav-caption">YOUR GAP YEAR, WITH DIRECTION</div>
+            <nav aria-label="Main navigation">
+              {[
+                ["/workspace", "overview", "Overview"],
+                ["/discover", "discover", "Opportunities"],
+                ["/plan", "plan", "My plan"],
+                ["/tracker", "tracker", "My tracker"],
+                ["/evidence", "evidence", "Evidence log"],
+                ["/mentor", "mentor", "Mentor guide"],
+              ].map(([to, icon, label]) => (
+                <NavLink key={to} to={to} end={to === "/"}>
+                  <Icon name={icon} />
+                  <span>{label}</span>
+                  {to === "/tracker" && Object.keys(state.saved).length > 0 && (
+                    <span className="nav-count">
+                      {Object.keys(state.saved).length}
+                    </span>
+                  )}
+                </NavLink>
+              ))}
+            </nav>
+            <div className="sidebar-bottom">
+              <div className="local-note">
+                <span className="status-dot" /> Free workspace
+                <p>
+                  Saved on this device.
+                  <br />
+                  Your work, at your pace.
+                </p>
+              </div>
+              <NavLink to="/profile" className="profile-link">
+                <Icon name="profile" />
+                {state.profile?.name || "Your profile"}
+                <span>↗</span>
               </NavLink>
-            ))}
-          </nav>
-          <div className="sidebar-bottom">
-            <div className="local-note">
-              <span className="status-dot" /> Free workspace
-              <p>
-                Saved on this device.
-                <br />
-                Your work, at your pace.
-              </p>
             </div>
-            <NavLink to="/profile" className="profile-link">
-              <Icon name="profile" />
-              {state.profile?.name || "Your profile"}
-              <span>↗</span>
-            </NavLink>
-          </div>
-        </aside>
+          </aside>
+        )}
         <div className="main-column">
-          <div className="topbar">
-            <span>Make your year count.</span>
-            <Link to="/guides">How it works</Link>
-          </div>
+          {!isHome && (
+            <div className="topbar">
+              <span>Make your year count.</span>
+              <Link to="/guides">How it works</Link>
+            </div>
+          )}
           <main id="main" ref={main} tabIndex="-1">
             {storageError && (
               <div className="notice warning" role="alert">
@@ -163,7 +172,8 @@ function Shell() {
               </div>
             )}
             <Routes>
-              <Route path="/" element={<Overview />} />
+              <Route path="/" element={<Landing />} />
+              <Route path="/workspace" element={<Overview />} />
               <Route path="/discover" element={<Discover />} />
               <Route path="/plan" element={<Plan />} />
               <Route path="/tracker" element={<Tracker />} />
@@ -208,10 +218,12 @@ function Shell() {
               />
             </Routes>
           </main>
-          <footer>
-            <span>MyGapMentor · Progress with purpose.</span>
-            <Link to="/guides">Privacy &amp; sources</Link>
-          </footer>
+          {!isHome && (
+            <footer>
+              <span>MyGapMentor · Progress with purpose.</span>
+              <Link to="/guides">Privacy &amp; sources</Link>
+            </footer>
+          )}
         </div>
       </div>
       {toast && (

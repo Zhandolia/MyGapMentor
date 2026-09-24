@@ -4,6 +4,7 @@ A practical gap-year workspace: discover relevant opportunities, build a realist
 
 ## What works
 
+- A minimal, search-first front page with a gentle route into guidance; the full workspace opens when requested.
 - A consistent, responsive workspace retaining the original blue-and-white identity and logo.
 - Profiles for 20 intended majors; age-aware matching with explanations rather than admissions scores.
 - 20 source-reviewed programs, practice resources, and directories, with eligibility notes and explicit event-date labels. Reviewed September 24, 2026.

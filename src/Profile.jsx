@@ -37,7 +37,7 @@ export function Profile() {
     };
     setState((s) => ({ ...s, profile }));
     notify("Your direction is saved.");
-    navigate(state.plan.length ? "/" : "/plan");
+    navigate(state.plan.length ? "/workspace" : "/plan");
   };
   const importFile = async (e) => {
     setError("");
