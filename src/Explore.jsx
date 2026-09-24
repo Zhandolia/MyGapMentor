@@ -1,7 +1,21 @@
 import React, { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { CHECKED, MAJORS, PROJECTS, opportunities } from "./catalog";
-import { blankProfile, ranked, today, searchMatches } from "./engine";
+import {
+  CHECKED,
+  MAJORS,
+  PROJECTS,
+  opportunities,
+  catalogFeed,
+  curatedOpportunities,
+} from "./catalog";
+import {
+  blankProfile,
+  ranked,
+  today,
+  searchMatches,
+  resolveOpportunity,
+  match,
+} from "./engine";
 import {
   useWorkspace,
   PageHead,
@@ -165,7 +179,7 @@ export function Overview() {
           {due.length ? (
             due.map(([id, s]) => (
               <Link className="deadline-row" to="/tracker" key={id}>
-                <span>{opportunities.find((o) => o.id === id)?.title}</span>
+                <span>{resolveOpportunity(id, state.saved)?.title}</span>
                 <span className={s.due < today() ? "overdue" : ""}>
                   {dateLabel(s.due)}
                   {s.due < today() ? " · overdue" : ""}
@@ -252,7 +266,8 @@ export function Discover() {
     ),
     results = candidates.filter((o) => !available || !o.blocked),
     hiddenCount = candidates.filter((o) => o.blocked).length,
-    detail = all.find((o) => o.id === params.get("op"));
+    detailOp = resolveOpportunity(params.get("op"), state.saved),
+    detail = detailOp ? match(detailOp, profile) : null;
   const choose = (id) =>
     setCompared((s) =>
       s.includes(id)
@@ -279,10 +294,57 @@ export function Discover() {
         description="Real opportunities. A concrete output. Your next three steps."
       />
       <p className="catalog-note small quiet">
-        <strong>{opportunities.length} curated starting points</strong>
-        {" · "}Official sources reviewed {dateLabel(CHECKED)}. Programs,
-        practice, and directories are labeled separately.
+        <strong>
+          {curatedOpportunities.length} researched starting points +{" "}
+          {all.filter((o) => o.provider && !o.blocked).length} available feed
+          listings
+        </strong>
+        {" · "}Research reviewed {dateLabel(CHECKED)}.
       </p>
+      <details className="feed-status optional-fields">
+        <summary>
+          Daily feed updates ·{" "}
+          {Object.values(catalogFeed.sources).some((s) => s.status !== "ok")
+            ? "Update delayed"
+            : `last refreshed ${dateLabel(
+                Object.values(catalogFeed.sources)
+                  .map((s) => s.lastSuccessAt?.slice(0, 10))
+                  .filter(Boolean)
+                  .sort()[0],
+              )}`}
+        </summary>
+        <p className="small quiet">
+          Feeds bring in new hackathons and active research projects
+          automatically. Program eligibility and topic matches still need an
+          organizer check.
+        </p>
+        {Object.entries(catalogFeed.sources).map(([name, source]) => (
+          <p className="small quiet" key={name}>
+            <strong>
+              {name === "mlh" ? "MLH events" : "Zooniverse projects"}
+            </strong>
+            :{" "}
+            {source.lastSuccessAt ? (
+              <span>
+                last successful refresh{" "}
+                <time dateTime={source.lastSuccessAt}>
+                  {dateLabel(source.lastSuccessAt.slice(0, 10))}
+                </time>
+              </span>
+            ) : (
+              "awaiting first refresh"
+            )}
+            {source.status !== "ok"
+              ? " · source temporarily unavailable; using the last successful copy"
+              : ""}
+            {source.lastSuccessAt &&
+            Date.now() - Date.parse(source.lastSuccessAt) > 7 * 86400000
+              ? " · refresh overdue; stale listings are excluded from active matches"
+              : ""}
+            .
+          </p>
+        ))}
+      </details>
       <section className="filters panel" aria-label="Filter opportunities">
         <label className="search-field">
           Search opportunities
@@ -397,7 +459,7 @@ export function Discover() {
       {available && hiddenCount > 0 && (
         <p className="small quiet">
           {hiddenCount} {hiddenCount === 1 ? "result hidden" : "results hidden"}{" "}
-          by age / enrollment requirements or an ended event.{" "}
+          by eligibility, ended events, or inactive / outdated feeds.{" "}
           <button className="text-button" onClick={() => setAvailable(false)}>
             Show these requirements
           </button>
@@ -512,8 +574,11 @@ export function Discover() {
             </div>
           )}
           <p className="small quiet">
-            Source reviewed {dateLabel(detail.checked)}. Availability can
-            change.
+            {detail.provider ? "Source listing refreshed" : "Source reviewed"}{" "}
+            {dateLabel(detail.checked)}.{" "}
+            {detail.provider
+              ? "Automatically imported; topic matching is inferred from source tags and title. Eligibility has not been individually verified."
+              : "Availability can change."}
           </p>
           <div className="actions">
             <button

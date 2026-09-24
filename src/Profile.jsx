@@ -540,10 +540,12 @@ export function Guides() {
           affiliated with the linked organizations. Programs can change after
           review. Each listing shows eligibility notes and a source link. Event
           dates are labeled separately from deadlines. Directories require
-          checking each event’s rules. This curated catalog is not exhaustive or
-          a live feed. Age and enrollment checks use your profile; country,
-          citizenship, exceptions, and age-at-deadline rules need an organizer
-          check. Suggested outputs and checklists are written by MyGapMentor.
+          checking each event’s rules. The catalog is not exhaustive. MLH event
+          listings and Zooniverse projects are refreshed daily; their refresh
+          dates are separate from the manual review dates. Age and enrollment
+          checks use your profile; country, citizenship, exceptions, and
+          age-at-deadline rules need an organizer check. Suggested outputs and
+          checklists are written by MyGapMentor.
         </p>
         <h3>Feedback &amp; corrections</h3>
         <p>

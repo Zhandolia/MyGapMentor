@@ -1,4 +1,5 @@
 import { MAJORS, PROJECTS, opportunities } from "./catalog";
+import { liveOpportunity, sanitizeRecord } from "./live-catalog";
 
 export const today = () => {
   const d = new Date();
@@ -63,6 +64,9 @@ export function match(op, profile, now = today()) {
     profile?.stage && op.stages && !op.stages.includes(profile.stage);
   const ended = op.endDate && op.endDate < now;
   const cycleClosed = !!(op.deadline && op.deadline < now);
+  const staleFeed =
+    !!op.provider && (!op.checked || addDays(op.checked, 7) < now);
+  const inactive = op.feedActive === false;
   const reasons = [];
   let score = 0;
   if (op.majors.includes(p.major)) {
@@ -91,37 +95,51 @@ export function match(op, profile, now = today()) {
   )
     score += 12;
   if (op.status === "next-cycle" || cycleClosed) score -= 18;
+  if (op.provider) score -= 4;
   if (op.minHours && p.hours < op.minHours) {
     score -= 25;
     reasons.push("Exceeds your weekly time budget");
   }
-  const eligibility = blocked
-    ? op.maxAge
-      ? `Published ages ${op.minAge}–${op.maxAge}`
-      : `Requires age ${op.minAge}+`
-    : stageConflict
-      ? op.stages.includes("college")
-        ? "Requires college enrollment"
-        : "Requires high-school enrollment"
-      : ended
-        ? "Event has ended"
-        : cycleClosed
-          ? "Applications closed"
-          : op.status === "next-cycle"
-            ? "Future cycle"
-            : !ageKnown && (op.minAge || op.maxAge || op.stages)
-              ? "Check age & enrollment"
-              : op.review
-                ? "Check specific rules"
-                : "Broadly accessible";
+  const eligibility = inactive
+    ? "No longer listed as active"
+    : staleFeed
+      ? "Source refresh overdue"
+      : blocked
+        ? op.maxAge
+          ? `Published ages ${op.minAge}–${op.maxAge}`
+          : `Requires age ${op.minAge}+`
+        : stageConflict
+          ? op.stages.includes("college")
+            ? "Requires college enrollment"
+            : "Requires high-school enrollment"
+          : ended
+            ? "Event has ended"
+            : cycleClosed
+              ? "Applications closed"
+              : op.status === "next-cycle"
+                ? "Future cycle"
+                : !ageKnown && (op.minAge || op.maxAge || op.stages)
+                  ? "Check age & enrollment"
+                  : op.review
+                    ? "Check specific rules"
+                    : "Broadly accessible";
   return {
     ...op,
-    score: blocked || ended || stageConflict ? -100 : score,
+    score:
+      blocked || ended || stageConflict || inactive || staleFeed ? -100 : score,
     reasons,
-    blocked: !!(blocked || ended || stageConflict),
+    blocked: !!(blocked || ended || stageConflict || inactive || staleFeed),
     cycleClosed,
     eligibilityLabel: eligibility,
   };
+}
+export function resolveOpportunity(id, saved = {}) {
+  return (
+    opportunities.find((op) => op.id === id) ||
+    (saved[id]?.snapshot
+      ? liveOpportunity({ ...saved[id].snapshot, active: false }, MAJORS)
+      : null)
+  );
 }
 export function searchMatches(op, query) {
   const normalize = (text) =>
@@ -316,26 +334,30 @@ export function validateState(raw) {
       notes: text(p.notes, 1500),
     };
   }
-  for (const op of opportunities)
-    if (Object.prototype.hasOwnProperty.call(raw.saved, op.id)) {
-      const s = raw.saved[op.id];
-      if (s && typeof s === "object")
-        state.saved[op.id] = {
-          status: STATUSES.includes(s.status) ? s.status : "Shortlisted",
-          notes: text(s.notes, 2000),
-          due: validDate(s.due) ? s.due : "",
-          url: safeUrl(text(s.url, 1000)),
-          stepsDone: Array.isArray(s.stepsDone)
-            ? [
-                ...new Set(
-                  s.stepsDone.filter(
-                    (i) => Number.isInteger(i) && i >= 0 && i < op.steps.length,
-                  ),
+  for (const [id, s] of Object.entries(raw.saved)) {
+    const snapshot = sanitizeRecord(s?.snapshot);
+    const op =
+      opportunities.find((o) => o.id === id) ||
+      (snapshot?.id === id ? liveOpportunity(snapshot, MAJORS) : null);
+    if (!op) continue;
+    if (s && typeof s === "object")
+      state.saved[op.id] = {
+        status: STATUSES.includes(s.status) ? s.status : "Shortlisted",
+        notes: text(s.notes, 2000),
+        due: validDate(s.due) ? s.due : "",
+        url: safeUrl(text(s.url, 1000)),
+        ...(op.feedRecord ? { snapshot: op.feedRecord } : {}),
+        stepsDone: Array.isArray(s.stepsDone)
+          ? [
+              ...new Set(
+                s.stepsDone.filter(
+                  (i) => Number.isInteger(i) && i >= 0 && i < op.steps.length,
                 ),
-              ]
-            : [],
-        };
-    }
+              ),
+            ]
+          : [],
+      };
+  }
   if (
     raw.plan.some((t) => !t || typeof t !== "object") ||
     raw.evidence.some((e) => !e || typeof e !== "object")

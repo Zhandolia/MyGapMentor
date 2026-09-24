@@ -6,7 +6,7 @@ Gap-year graduates need an achievable next commitment, not an endless list of ac
 
 ## Five-minute demo
 
-1. Search from the homepage or click a floating example. No profile is required.
+1. Search from the homepage or click a quick-search button. No profile is required.
 2. Open an activity and show its output, eligibility, official source, and three next steps.
 3. Save its checklist, complete one step, and refresh to demonstrate persistence.
 4. Add an example Biology profile, age 17, gap-year graduate. Show the tailored results and enrollment exclusions.
@@ -30,7 +30,7 @@ Targets and pricing should follow interviews and usage, not invented benchmarks.
 
 ## Next implementation priorities, after validation
 
-1. **Opportunity operations:** a review queue, expiry rules, source-change checks, and wider graduate-specific coverage. Add manual tracker entries for specific events discovered through directories.
+1. **Opportunity operations:** a review queue for manually researched eligibility, more feed adapters beyond the automated MLH/Zooniverse sources, and wider graduate-specific coverage. Add manual tracker entries for specific events discovered through directories.
 2. **Account-backed persistence:** authenticated storage with per-user access policies, backup recovery, consent and retention controls appropriate for younger users, and cross-device sync. Local storage is sufficient for this demo, not the final account system.
 3. **Planning flexibility:** custom projects and tasks, task carry-over, mentor comments, and explicit graduation-date/country rule checks for programs that publish them.
 4. **Distribution:** test a counselor workflow and curated cohort guides before spending on paid acquisition.

@@ -27,3 +27,6 @@ yarn-error.log*
 .env.*
 !.env.example
 *.log
+
+__pycache__/
+*.pyc

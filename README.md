@@ -4,10 +4,11 @@ A practical gap-year workspace: discover relevant opportunities, build a realist
 
 ## What works
 
-- A minimal, search-first front page with six clickable floating program examples, a pause control, and reduced-motion support.
+- A minimal, search-first front page with 16 stationary quick-search buttons beneath the search bar.
 - A consistent, responsive workspace retaining the original blue-and-white identity and logo.
 - Three-field setup (subject, age, education stage), with optional preferences; results appear immediately. No profile is needed to browse or save.
 - 48 source-reviewed programs, practice resources, and directories across 20 majors, with eligibility, timing, cost, commitment, suggested outputs, and three tailored next steps. Reviewed September 24, 2026.
+- Daily hosted imports from MLH and Zooniverse; automatic retirement, stale-source handling, and cached fallbacks. No visitor API key or running laptop is required.
 - Multiword search, collapsed advanced filters, timing tabs, progressive result loading, comparisons, and saved checklists with persistent completion.
 - A 12-week plan with a major-specific independent project, weekly hour budget, editable tasks and dates, and completion tracking.
 - An application/activity tracker with status, notes, personal target dates, and calendar export.
@@ -55,6 +56,18 @@ The previous code exposed an API key and tracked an environment file. They have 
 
 Edit `src/catalog.js`, `src/catalog-extra.js`, and `src/opportunity-actions.js`. See [research notes](src/RESEARCH.md). Each entry should have a primary source, review date, distinct category, eligibility text, accurate cost/format labels, and a concrete possible output. Never convert an event date into an application deadline. Keep directories distinct from programs, and distinguish simulations, open courses, and research participation from internships or formal credit. Review before each application season.
 
-`src/engine.js` contains matching, scheduling, calendar export, backup validation, and guide logic. The 33 tests cover eligibility and enrollment, unknown visitors, application expiration, multiword search, checklist backup compatibility, catalog integrity, time allocation across every major, unsafe imported URLs, and calendar escaping. GitHub Actions runs tests and a production build on pushes and pull requests.
+`src/engine.js` contains matching, scheduling, calendar export, backup validation, and guide logic. The JavaScript and Python tests cover eligibility and enrollment, unknown visitors, application expiration, multiword search, checklist backup compatibility, catalog integrity, time allocation across every major, unsafe imported URLs, and calendar escaping. GitHub Actions runs tests and a production build on pushes and pull requests.
 
 See [PRODUCT.md](PRODUCT.md) for the launch hypothesis, demo flow, and next investment decisions.
+
+## Automatic catalog refresh
+
+[Refresh opportunity feeds](.github/workflows/refresh-catalog.yml) runs daily at 08:23 UTC in GitHub Actions and supports manual dispatch. It reads MLH’s current/next season calendar and the paginated public Zooniverse API. The first import added 80 upcoming MLH events and 75 live, unfinished research projects; counts change with source availability.
+
+The job commits `src/catalog-feed.json` with real check timestamps and source health. The website fetches that public snapshot on opening, returning to the tab, and every 30 minutes while visible. A new frontend deployment is not required for data updates. Failed requests retain the last successful source data and do not advance its successful-refresh timestamp. Listings more than seven days out of date are excluded from active matches. Retired entries are retained for two years; saved entries also carry a validated local snapshot so personal notes survive retirement.
+
+Feed data is validated before publication and in the browser. Source HTML or API schema failures fail the GitHub run instead of silently clearing results. The workflow uses the repository’s built-in token, with repository-content write permission only; no paid API or personal token is stored. GitHub may delay scheduled runs or disable them after extended repository inactivity. Daily snapshot commits record actual update activity, but upstream outages, account changes, or disabled Actions can still require maintenance. The UI shows the last successful dates rather than claiming permanent freshness.
+
+This automates listings, dates, and active/retired status for the two supported sources. It does not automatically rewrite the 48 manually researched programs’ eligibility rules. Those records retain their honest manual review dates, and calendar deadlines continue to expire automatically. New source integrations or material rule changes require a reviewed code/content update.
+
+Sources: [Panoptes public API](https://zooniverse.github.io/panoptes/), [MLH calendar](https://www.mlh.com/seasons/2027/events), [GitHub schedule behavior](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).

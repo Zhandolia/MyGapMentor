@@ -6,12 +6,10 @@ import logo from "./NEW_LOGO.png";
 
 export default function Landing() {
   const [query, setQuery] = useState("");
-  const [paused, setPaused] = useState(false);
   const { state } = useWorkspace();
   const navigate = useNavigate();
-  function search(event) {
-    event.preventDefault();
-    const value = query.trim();
+  function search(value) {
+    value = value.trim();
     if (!value) return;
     const major = MAJORS.find(
       (name) => name.toLowerCase() === value.toLowerCase(),
@@ -21,28 +19,11 @@ export default function Landing() {
     );
   }
   return (
-    <div className={`landing ${paused ? "motion-paused" : ""}`}>
+    <div className="landing">
       <nav className="landing-nav" aria-label="Workspace access">
         <Link to="/workspace">
           {state.profile ? "Back to my workspace" : "My workspace"}{" "}
           <span aria-hidden="true">↗</span>
-        </Link>
-      </nav>
-      <nav
-        className="floating-examples examples-top"
-        aria-label="Example opportunities"
-      >
-        <Link to="/discover?op=nasa-ostem">
-          <span>NASA internships</span>
-          <small>College enrollment required</small>
-        </Link>
-        <Link to="/discover?op=gsoc">
-          <span>Google Summer of Code</span>
-          <small>Open source · 18+</small>
-        </Link>
-        <Link to="/discover?op=zooniverse">
-          <span>Zooniverse research</span>
-          <small>Contribute from anywhere</small>
         </Link>
       </nav>
       <section className="landing-center" aria-labelledby="landing-title">
@@ -50,7 +31,14 @@ export default function Landing() {
           <img src={logo} alt="MyGapMentor" />
         </h1>
         <p>Let’s find your next step.</p>
-        <form className="landing-search" role="search" onSubmit={search}>
+        <form
+          className="landing-search"
+          role="search"
+          onSubmit={(event) => {
+            event.preventDefault();
+            search(query);
+          }}
+        >
           <Icon name="discover" width="21" height="21" />
           <label className="sr-only" htmlFor="direction-search">
             Search a subject or opportunity
@@ -69,34 +57,38 @@ export default function Landing() {
             <Icon name="arrow" />
           </button>
         </form>
+        <div
+          className="quick-searches"
+          role="group"
+          aria-label="Quick searches"
+        >
+          {[
+            ["NASA internships", "NASA internship"],
+            ["Google Summer of Code", "Google Summer of Code"],
+            ["Hackathons", "hackathon"],
+            ["Research", "research"],
+            ["Volunteering", "volunteering"],
+            ["Mathematics", "Mathematics"],
+            ["USACO", "USACO"],
+            ["Zooniverse", "Zooniverse"],
+            ["Schoolhouse tutoring", "Schoolhouse"],
+            ["YoungArts", "YoungArts"],
+            ["Summer programs", "summer"],
+            ["Open source", "open source"],
+            ["Biology", "Biology"],
+            ["Engineering", "Engineering"],
+            ["Writing", "English"],
+            ["Business", "Business Administration"],
+          ].map(([label, value]) => (
+            <button type="button" key={label} onClick={() => search(value)}>
+              {label}
+            </button>
+          ))}
+        </div>
         <Link className="landing-help" to="/mentor">
           Not sure where to start?
         </Link>
       </section>
-      <nav
-        className="floating-examples examples-bottom"
-        aria-label="More ideas to explore"
-      >
-        <Link to="/discover?op=usaco">
-          <span>USACO problem solving</span>
-          <small>Build your programming skills</small>
-        </Link>
-        <Link to="/discover?op=schoolhouse">
-          <span>Schoolhouse tutoring</span>
-          <small>Help someone learn</small>
-        </Link>
-        <Link to="/discover?op=youngarts">
-          <span>YoungArts competition</span>
-          <small>Make room for your creativity</small>
-        </Link>
-      </nav>
-      <button
-        className="motion-control text-button"
-        aria-pressed={paused}
-        onClick={() => setPaused((v) => !v)}
-      >
-        {paused ? "Resume floating examples" : "Pause floating examples"}
-      </button>
     </div>
   );
 }

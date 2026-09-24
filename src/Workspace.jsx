@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { PROJECTS, opportunities } from "./catalog";
-import { calendar, createPlan, safeUrl, STATUSES, today } from "./engine";
+import {
+  calendar,
+  createPlan,
+  safeUrl,
+  STATUSES,
+  today,
+  resolveOpportunity,
+} from "./engine";
 import {
   useWorkspace,
   PageHead,
@@ -274,7 +281,7 @@ export function Tracker() {
                   dates.map(([id, s]) => ({
                     id,
                     date: s.due,
-                    title: `Personal target: ${opportunities.find((o) => o.id === id)?.title}`,
+                    title: `Personal target: ${resolveOpportunity(id, state.saved)?.title}`,
                     description: s.notes,
                   })),
                 ),
@@ -307,7 +314,8 @@ export function Tracker() {
       </div>
       <div className="tracker-list">
         {entries.map(([id, s]) => {
-          const o = opportunities.find((x) => x.id === id);
+          const o = resolveOpportunity(id, state.saved);
+          if (!o) return null;
           return (
             <article className="panel tracker-item" key={id}>
               <div className="section-title">

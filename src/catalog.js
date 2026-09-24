@@ -1,5 +1,7 @@
 import { extraOpportunities } from "./catalog-extra";
 import { enrichOpportunity } from "./opportunity-actions";
+import snapshot from "./catalog-feed.json";
+import { readFeed, liveOpportunity } from "./live-catalog";
 export const CHECKED = "2026-09-24";
 export const MAJORS = [
   "Computer Science",
@@ -459,7 +461,35 @@ const originalOpportunities = [
   ),
 ];
 
-export const opportunities = [
+export const curatedOpportunities = [
   ...originalOpportunities,
   ...extraOpportunities(item, MAJORS),
 ].map(enrichOpportunity);
+function bundledFeed() {
+  try {
+    return readFeed(snapshot);
+  } catch {
+    return {
+      version: 1,
+      generatedAt: "1970-01-01T00:00:00Z",
+      sources: { mlh: { status: "error" }, zooniverse: { status: "error" } },
+      opportunities: [],
+    };
+  }
+}
+export let catalogFeed = bundledFeed();
+export let opportunities = [
+  ...curatedOpportunities,
+  ...catalogFeed.opportunities.map((r) => liveOpportunity(r, MAJORS)),
+];
+export function updateCatalog(raw) {
+  const next = readFeed(raw);
+  if (Date.parse(next.generatedAt) <= Date.parse(catalogFeed.generatedAt))
+    return false;
+  catalogFeed = next;
+  opportunities = [
+    ...curatedOpportunities,
+    ...next.opportunities.map((r) => liveOpportunity(r, MAJORS)),
+  ];
+  return true;
+}

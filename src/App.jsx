@@ -8,7 +8,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { MAJORS } from "./catalog";
+import { MAJORS, opportunities, catalogFeed, updateCatalog } from "./catalog";
 import { emptyState, validateState } from "./engine";
 import { Context, Icon } from "./components";
 import { Overview, Discover } from "./Explore";
@@ -18,7 +18,16 @@ import { Profile, Mentor, Guides } from "./Profile";
 import logo from "./NEW_LOGO.png";
 import "./App.css";
 const KEY = "mygapmentor.workspace.v1";
+const FEED_KEY = "mygapmentor.catalog.v1";
+const FEED_URL =
+  "https://raw.githubusercontent.com/Zhandolia/MyGapMentor/main/src/catalog-feed.json";
 function load() {
+  try {
+    const cached = localStorage.getItem(FEED_KEY);
+    if (cached) updateCatalog(JSON.parse(cached));
+  } catch {
+    /* A bad feed cache must never prevent loading personal work. */
+  }
   try {
     const data = localStorage.getItem(KEY);
     return {
@@ -39,6 +48,46 @@ function Shell() {
     [storageError, setStorageError] = useState(initial.warning),
     [blocked, setBlocked] = useState(!!initial.warning),
     [toast, setToast] = useState("");
+  const [feedVersion, setFeedVersion] = useState(catalogFeed.generatedAt);
+  useEffect(() => {
+    let disposed = false,
+      busy = false;
+    const refresh = async () => {
+      if (busy || document.visibilityState === "hidden") return;
+      busy = true;
+      try {
+        const response = await fetch(FEED_URL, {
+          signal: AbortSignal.timeout(12000),
+          cache: "no-cache",
+          credentials: "omit",
+        });
+        if (!response.ok) throw new Error("Catalog unavailable");
+        const body = await response.text();
+        if (body.length > 5000000) throw new Error("Catalog too large");
+        const next = JSON.parse(body);
+        if (!disposed && updateCatalog(next)) {
+          setFeedVersion(catalogFeed.generatedAt);
+          try {
+            localStorage.setItem(FEED_KEY, JSON.stringify(next));
+          } catch {
+            /* Bundled fallback remains available. */
+          }
+        }
+      } catch {
+        /* Keep the last successful catalog and display its actual date. */
+      } finally {
+        busy = false;
+      }
+    };
+    refresh();
+    const interval = setInterval(refresh, 30 * 60 * 1000);
+    document.addEventListener("visibilitychange", refresh);
+    return () => {
+      disposed = true;
+      clearInterval(interval);
+      document.removeEventListener("visibilitychange", refresh);
+    };
+  }, []);
   const location = useLocation(),
     main = useRef();
   const isHome = location.pathname === "/";
@@ -77,6 +126,7 @@ function Shell() {
           notes: "",
           due: "",
           url: "",
+          snapshot: opportunities.find((op) => op.id === id)?.feedRecord,
         },
       },
     }));
@@ -102,6 +152,7 @@ function Shell() {
         toggleTask,
         notify: setToast,
         setBlocked,
+        feedVersion,
       }}
     >
       <a

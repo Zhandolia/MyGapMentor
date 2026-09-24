@@ -1,6 +1,6 @@
 # Opportunity research — 24 September 2026
 
-The catalog contains 48 distinct starting points: specific programs, participation projects, practice resources, and clearly labeled discovery directories. It is a curated research snapshot, not an exhaustive database or a live application feed. The directories extend discovery beyond the individually reviewed records.
+The manually researched catalog contains 48 distinct starting points: specific programs, participation projects, practice resources, and clearly labeled discovery directories. It is a curated research snapshot, not an exhaustive database or a live application feed. The directories extend discovery beyond the individually reviewed records.
 
 Research used organizer, university, government, and project documentation. We paraphrase factual descriptions and link to the primary source. The outputs and three-step checklists are original MyGapMentor suggestions, not organizer promises. No program applications, accounts, messages, or registrations were submitted during research.
 
@@ -73,3 +73,7 @@ Known application deadlines switch to “Applications closed” after their date
 | Advent of Code practice (`advent`) | [Official source](https://adventofcode.com/about) |
 | Beamline for Schools (`beamline`) | [Official source](https://beamlineforschools.cern/about) |
 | NASA citizen-science projects (`nasa-citizen`) | [Official source](https://science.nasa.gov/get-involved/citizen-science/you-can-help-humans-thrive-in-space/) |
+
+## Automatically refreshed listings
+
+MLH calendar metadata and Zooniverse public project metadata are now imported by a daily GitHub workflow. They are distinguished from the 48 manually reviewed records. See the README for refresh timing and failure behavior. Titles, event dates, public project status, and tags come from the source; summaries and suggested outputs are MyGapMentor templates. Topic matching is an inference from titles/tags, not an organizer claim of major relevance. We do not copy full program descriptions, infer application deadlines from event dates, or mark imported eligibility as individually verified.
