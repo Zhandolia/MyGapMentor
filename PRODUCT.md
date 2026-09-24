@@ -6,12 +6,12 @@ Gap-year graduates need an achievable next commitment, not an endless list of ac
 
 ## Five-minute demo
 
-1. Create an example Biology profile, age 17, four hours a week. Explain that the example contains no real student data.
-2. Generate a plan. Show the time budget and independent project brief.
-3. Compare Zooniverse and iNaturalist. Open the source and eligibility notes.
-4. Save one opportunity, change its status, and set a personal target date.
-5. Complete a task and log a contribution with a link and reflection.
-6. Return to Overview. Show actual recorded progress, then export a backup or calendar.
+1. Search from the homepage or click a floating example. No profile is required.
+2. Open an activity and show its output, eligibility, official source, and three next steps.
+3. Save its checklist, complete one step, and refresh to demonstrate persistence.
+4. Add an example Biology profile, age 17, gap-year graduate. Show the tailored results and enrollment exclusions.
+5. Compare two options and log real work in the evidence log. The longer plan remains optional.
+6. Export a workspace backup or personal target dates when useful.
 
 The public demo does not depend on a paid API or a running local server. The guide is structured coaching, not a live language model.
 

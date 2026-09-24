@@ -9,7 +9,86 @@ import {
   ranked,
   safeUrl,
   validateState,
+  searchMatches,
 } from "./engine";
+test("unknown visitors are not assigned an invented age or enrollment conflict", () => {
+  const nasa = opportunities.find((o) => o.id === "nasa-ostem");
+  expect(match(nasa, null, "2026-09-24").blocked).toBe(false);
+  expect(match(nasa, null, "2026-09-24").eligibilityLabel).toBe(
+    "Check age & enrollment",
+  );
+});
+test("school-only and college-only programs respect a graduate profile", () => {
+  const p = blankProfile();
+  expect(
+    match(
+      opportunities.find((o) => o.id === "nasa-ostem"),
+      p,
+    ).blocked,
+  ).toBe(true);
+  expect(
+    match(
+      opportunities.find((o) => o.id === "diamond"),
+      p,
+    ).blocked,
+  ).toBe(true);
+  expect(
+    match(
+      opportunities.find((o) => o.id === "diamond"),
+      { ...p, stage: "school" },
+      "2026-09-24",
+    ).blocked,
+  ).toBe(false);
+  expect(
+    match(
+      opportunities.find((o) => o.id === "schoolhouse"),
+      p,
+    ).blocked,
+  ).toBe(false);
+});
+test("a known application deadline expires without deleting the preparation opportunity", () => {
+  const op = opportunities.find((o) => o.id === "youngarts");
+  expect(match(op, blankProfile(), "2026-10-06").cycleClosed).toBe(false);
+  expect(match(op, blankProfile(), "2026-10-07").eligibilityLabel).toBe(
+    "Applications closed",
+  );
+});
+test("multiword searches tolerate plurals and common activity vocabulary", () => {
+  const get = (id) => opportunities.find((o) => o.id === id);
+  expect(searchMatches(get("nasa-ostem"), "NASA internships")).toBe(true);
+  expect(searchMatches(get("gsoc"), "google coding")).toBe(true);
+  expect(searchMatches(get("usaco"), "olympiads")).toBe(true);
+  expect(searchMatches(get("smithsonian"), "volunteering history")).toBe(true);
+  expect(searchMatches(get("smithsonian"), "NASA internship")).toBe(false);
+});
+test("checklist progress survives backup restore without accepting invalid step indexes", () => {
+  const state = emptyState();
+  state.saved.schoolhouse = {
+    status: "Preparing",
+    notes: "Keep this note",
+    due: "2026-10-01",
+    url: "",
+    stepsDone: [0, 0, 2, -1, 3, "1", null],
+  };
+  const restored = validateState(JSON.parse(JSON.stringify(state)));
+  expect(restored.saved.schoolhouse.stepsDone).toEqual([0, 2]);
+  expect(restored.saved.schoolhouse.notes).toBe("Keep this note");
+  delete state.saved.schoolhouse.stepsDone;
+  expect(validateState(state).saved.schoolhouse.stepsDone).toEqual([]);
+});
+test("the expanded catalog has distinct sources, actionable steps, and valid deadlines", () => {
+  expect(opportunities.length).toBeGreaterThanOrEqual(48);
+  expect(new Set(opportunities.map((o) => o.id)).size).toBe(
+    opportunities.length,
+  );
+  for (const op of opportunities) {
+    expect(safeUrl(op.source)).toBeTruthy();
+    expect(op.steps).toHaveLength(3);
+    expect(new Set(op.steps).size).toBe(3);
+    expect(op.commitment.length).toBeGreaterThan(10);
+    if (op.deadline) expect(addDays(op.deadline, 0)).toBe(op.deadline);
+  }
+});
 test("age restrictions and ended events do not rank as available", () => {
   const p = { ...blankProfile(), age: 17 };
   expect(

@@ -6,6 +6,7 @@ import logo from "./NEW_LOGO.png";
 
 export default function Landing() {
   const [query, setQuery] = useState("");
+  const [paused, setPaused] = useState(false);
   const { state } = useWorkspace();
   const navigate = useNavigate();
   function search(event) {
@@ -20,11 +21,28 @@ export default function Landing() {
     );
   }
   return (
-    <div className="landing">
+    <div className={`landing ${paused ? "motion-paused" : ""}`}>
       <nav className="landing-nav" aria-label="Workspace access">
         <Link to="/workspace">
           {state.profile ? "Back to my workspace" : "My workspace"}{" "}
           <span aria-hidden="true">↗</span>
+        </Link>
+      </nav>
+      <nav
+        className="floating-examples examples-top"
+        aria-label="Example opportunities"
+      >
+        <Link to="/discover?op=nasa-ostem">
+          <span>NASA internships</span>
+          <small>College enrollment required</small>
+        </Link>
+        <Link to="/discover?op=gsoc">
+          <span>Google Summer of Code</span>
+          <small>Open source · 18+</small>
+        </Link>
+        <Link to="/discover?op=zooniverse">
+          <span>Zooniverse research</span>
+          <small>Contribute from anywhere</small>
         </Link>
       </nav>
       <section className="landing-center" aria-labelledby="landing-title">
@@ -55,6 +73,30 @@ export default function Landing() {
           Not sure where to start?
         </Link>
       </section>
+      <nav
+        className="floating-examples examples-bottom"
+        aria-label="More ideas to explore"
+      >
+        <Link to="/discover?op=usaco">
+          <span>USACO problem solving</span>
+          <small>Build your programming skills</small>
+        </Link>
+        <Link to="/discover?op=schoolhouse">
+          <span>Schoolhouse tutoring</span>
+          <small>Help someone learn</small>
+        </Link>
+        <Link to="/discover?op=youngarts">
+          <span>YoungArts competition</span>
+          <small>Make room for your creativity</small>
+        </Link>
+      </nav>
+      <button
+        className="motion-control text-button"
+        aria-pressed={paused}
+        onClick={() => setPaused((v) => !v)}
+      >
+        {paused ? "Resume floating examples" : "Pause floating examples"}
+      </button>
     </div>
   );
 }

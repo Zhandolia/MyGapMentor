@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { CHECKED, MAJORS, PROJECTS, opportunities } from "./catalog";
-import { blankProfile, ranked, today } from "./engine";
+import { blankProfile, ranked, today, searchMatches } from "./engine";
 import {
   useWorkspace,
   PageHead,
@@ -218,27 +218,40 @@ export function Discover() {
         : state.profile?.freeOnly || false,
     ),
     [available, setAvailable] = useState(true),
+    [timing, setTiming] = useState("Any timing"),
+    [limit, setLimit] = useState(12),
     [compared, setCompared] = useState([]),
     [showCompare, setShowCompare] = useState(false);
   const profile = {
       ...(state.profile || blankProfile()),
+      age: state.profile?.age,
+      stage: state.profile?.stage,
       major:
         major === "All majors"
           ? state.profile?.major || "Computer Science"
           : major,
     },
     all = ranked(profile),
-    results = all.filter(
+    candidates = all.filter(
       (o) =>
         (major === "All majors" || o.majors.includes(major)) &&
         (category === "All types" || o.category === category) &&
         (format === "Any" || o.format === format) &&
         (!free || o.cost === "Free") &&
-        (!available || !o.blocked) &&
-        `${o.title} ${o.organization} ${o.category} ${o.summary} ${o.majors.join(" ")}`
-          .toLowerCase()
-          .includes(query.toLowerCase()),
+        (timing === "Any timing" ||
+          (timing === "Start anytime"
+            ? o.status === "ongoing" &&
+              !o.eventDate &&
+              !o.category.endsWith("directory")
+            : timing === "Prepare for later"
+              ? o.status === "next-cycle" || o.cycleClosed
+              : o.status !== "next-cycle" &&
+                !o.cycleClosed &&
+                (o.status === "seasonal" || !!o.eventDate))) &&
+        searchMatches(o, query),
     ),
+    results = candidates.filter((o) => !available || !o.blocked),
+    hiddenCount = candidates.filter((o) => o.blocked).length,
     detail = all.find((o) => o.id === params.get("op"));
   const choose = (id) =>
     setCompared((s) =>
@@ -255,21 +268,21 @@ export function Discover() {
     setFormat("Any");
     setFree(false);
     setAvailable(true);
+    setTiming("Any timing");
+    setLimit(12);
   };
   return (
     <>
       <PageHead
         eyebrow="OPPORTUNITY EXPLORER"
-        title="Find your next worthwhile thing."
-        description="Start with your interests, then check the practical fit. A thoughtful shortlist beats a hundred open tabs."
+        title="Find something worth doing."
+        description="Real opportunities. A concrete output. Your next three steps."
       />
-      <div className="notice">
+      <p className="catalog-note small quiet">
         <strong>{opportunities.length} curated starting points</strong>
-        <span>
-          Programs, practice, and directories are labeled separately. Matching
-          uses your major and preferences, not an admissions score.
-        </span>
-      </div>
+        {" · "}Official sources reviewed {dateLabel(CHECKED)}. Programs,
+        practice, and directories are labeled separately.
+      </p>
       <section className="filters panel" aria-label="Filter opportunities">
         <label className="search-field">
           Search opportunities
@@ -280,64 +293,94 @@ export function Discover() {
             onChange={(e) => setQuery(e.target.value)}
           />
         </label>
-        <div className="filter-grid">
-          <label>
-            Major
-            <select value={major} onChange={(e) => setMajor(e.target.value)}>
-              <option>All majors</option>
-              {MAJORS.map((m) => (
-                <option key={m}>{m}</option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Type
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option>All types</option>
-              {[...new Set(opportunities.map((o) => o.category))]
-                .sort()
-                .map((c) => (
-                  <option key={c}>{c}</option>
+        <details className="optional-fields">
+          <summary>
+            Refine results{" "}
+            <span className="small quiet">
+              Subject, type, format &amp; cost
+            </span>
+          </summary>
+          <div className="filter-grid">
+            <label>
+              Major
+              <select value={major} onChange={(e) => setMajor(e.target.value)}>
+                <option>All majors</option>
+                {MAJORS.map((m) => (
+                  <option key={m}>{m}</option>
                 ))}
-            </select>
-          </label>
-          <label>
-            Format
-            <select value={format} onChange={(e) => setFormat(e.target.value)}>
-              {["Any", "Remote", "Local", "Hybrid"].map((f) => (
-                <option key={f}>{f}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-        <div className="filter-bottom">
-          <label className="check-label">
-            <input
-              type="checkbox"
-              checked={free}
-              onChange={(e) => setFree(e.target.checked)}
-            />
-            Free participation only
-          </label>
-          <label className="check-label">
-            <input
-              type="checkbox"
-              checked={available}
-              onChange={(e) => setAvailable(e.target.checked)}
-            />
-            Hide age conflicts &amp; ended events
-          </label>
-          <button className="text-button" onClick={reset}>
-            Reset filters
-          </button>
+              </select>
+            </label>
+            <label>
+              Type
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option>All types</option>
+                {[...new Set(opportunities.map((o) => o.category))]
+                  .sort()
+                  .map((c) => (
+                    <option key={c}>{c}</option>
+                  ))}
+              </select>
+            </label>
+            <label>
+              Format
+              <select
+                value={format}
+                onChange={(e) => setFormat(e.target.value)}
+              >
+                {["Any", "Remote", "Local", "Hybrid"].map((f) => (
+                  <option key={f}>{f}</option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <div className="filter-bottom">
+            <label className="check-label">
+              <input
+                type="checkbox"
+                checked={free}
+                onChange={(e) => setFree(e.target.checked)}
+              />
+              Free participation only
+            </label>
+            <label className="check-label">
+              <input
+                type="checkbox"
+                checked={available}
+                onChange={(e) => setAvailable(e.target.checked)}
+              />
+              Hide known age / enrollment conflicts &amp; ended events
+            </label>
+            <button className="text-button" onClick={reset}>
+              Reset filters
+            </button>
+          </div>
+        </details>
+        <div className="timing-tabs" aria-label="Opportunity timing">
+          {[
+            "Any timing",
+            "Start anytime",
+            "Application / event",
+            "Prepare for later",
+          ].map((value) => (
+            <button
+              type="button"
+              key={value}
+              aria-pressed={timing === value}
+              onClick={() => setTiming(value)}
+            >
+              {value}
+            </button>
+          ))}
         </div>
       </section>
       <div className="results-heading" aria-live="polite">
         <span>
-          <strong>{results.length}</strong> results · ordered by fit
+          <strong>{results.length}</strong>{" "}
+          {results.length === 1 ? "result" : "results"}
+          {major !== "All majors" ? ` · ${major}` : ""} · ordered by fit
         </span>
         {compared.length > 0 && (
           <button className="button" onClick={() => setShowCompare(true)}>
@@ -347,18 +390,28 @@ export function Discover() {
       </div>
       {!state.profile && (
         <p className="small quiet">
-          <Link to="/profile">Add your profile</Link> for age-aware matching.
-          Until then, age checks use an example age of 18.
+          <Link to="/profile">Personalize with 3 details</Link> for age and
+          enrollment checks. You can browse and save without a profile.
+        </p>
+      )}
+      {available && hiddenCount > 0 && (
+        <p className="small quiet">
+          {hiddenCount} {hiddenCount === 1 ? "result hidden" : "results hidden"}{" "}
+          by age / enrollment requirements or an ended event.{" "}
+          <button className="text-button" onClick={() => setAvailable(false)}>
+            Show these requirements
+          </button>
         </p>
       )}
       <div className="card-grid">
-        {results.map((o) => (
+        {results.slice(0, limit).map((o) => (
           <OpportunityCard
             op={o}
             key={o.id}
             onDetails={(o) =>
               setParams({
                 ...(major !== "All majors" ? { major } : {}),
+                ...(query ? { q: query } : {}),
                 op: o.id,
               })
             }
@@ -367,6 +420,13 @@ export function Discover() {
           />
         ))}
       </div>
+      {results.length > limit && (
+        <div className="load-more">
+          <button className="button" onClick={() => setLimit((n) => n + 12)}>
+            Show 12 more · {results.length - limit} remaining
+          </button>
+        </div>
+      )}
       {!results.length && (
         <Empty
           title="No matches with these filters."
@@ -406,7 +466,7 @@ export function Discover() {
             <strong>{detail.eligibilityLabel}</strong>
             <span>{detail.eligibility}</span>
           </div>
-          <h3>What you could take away</h3>
+          <h3>What you can produce</h3>
           <p>{detail.evidence}</p>
           <h3>Timing</h3>
           <p>
@@ -415,12 +475,42 @@ export function Discover() {
               ? "These are event dates, not an application deadline."
               : "Check the organizer for any application deadline."}
           </p>
-          <h3>Your first step</h3>
-          <p>
-            Read the official requirements, confirm that your age and enrollment
-            status fit, and choose a small first commitment. Set your own target
-            date in the tracker.
+          <h3>Time commitment</h3>
+          <p>{detail.commitment}</p>
+          <h3>Your next three steps</h3>
+          <ol className="next-steps">
+            {detail.steps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+          <p className="small quiet">
+            Preparation suggestions from MyGapMentor. Follow the organizer’s
+            current instructions when participating.
           </p>
+          {(detail.blocked ||
+            detail.status === "next-cycle" ||
+            detail.cycleClosed) && (
+            <div className="alternative-box">
+              <strong>Something you can explore now</strong>
+              {all
+                .filter(
+                  (o) =>
+                    o.id !== detail.id &&
+                    !o.blocked &&
+                    o.status === "ongoing" &&
+                    !o.eventDate &&
+                    o.cost === "Free" &&
+                    o.majors.some((m) => detail.majors.includes(m)) &&
+                    !o.category.endsWith("directory"),
+                )
+                .slice(0, 2)
+                .map((o) => (
+                  <Link key={o.id} to={`/discover?op=${o.id}`}>
+                    {o.title} →
+                  </Link>
+                ))}
+            </div>
+          )}
           <p className="small quiet">
             Source reviewed {dateLabel(detail.checked)}. Availability can
             change.
@@ -431,11 +521,18 @@ export function Discover() {
               disabled={!!state.saved[detail.id]}
               onClick={() => save(detail.id)}
             >
-              {state.saved[detail.id] ? "Saved to tracker" : "Save to tracker"}
+              {state.saved[detail.id]
+                ? "Checklist saved"
+                : "Save this checklist"}
             </button>
             <External className="button" href={detail.apply || detail.url}>
               Visit official site
             </External>
+            {state.saved[detail.id] && (
+              <Link className="button" to="/tracker">
+                Open my checklist →
+              </Link>
+            )}
             <External href={detail.source || detail.url}>Read source</External>
           </div>
         </Modal>

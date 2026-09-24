@@ -4,11 +4,11 @@ A practical gap-year workspace: discover relevant opportunities, build a realist
 
 ## What works
 
-- A minimal, search-first front page with a gentle route into guidance; the full workspace opens when requested.
+- A minimal, search-first front page with six clickable floating program examples, a pause control, and reduced-motion support.
 - A consistent, responsive workspace retaining the original blue-and-white identity and logo.
-- Profiles for 20 intended majors; age-aware matching with explanations rather than admissions scores.
-- 20 source-reviewed programs, practice resources, and directories, with eligibility notes and explicit event-date labels. Reviewed September 24, 2026.
-- Search, major/type/format/free filters, up to three-way comparison, and saved opportunities.
+- Three-field setup (subject, age, education stage), with optional preferences; results appear immediately. No profile is needed to browse or save.
+- 48 source-reviewed programs, practice resources, and directories across 20 majors, with eligibility, timing, cost, commitment, suggested outputs, and three tailored next steps. Reviewed September 24, 2026.
+- Multiword search, collapsed advanced filters, timing tabs, progressive result loading, comparisons, and saved checklists with persistent completion.
 - A 12-week plan with a major-specific independent project, weekly hour budget, editable tasks and dates, and completion tracking.
 - An application/activity tracker with status, notes, personal target dates, and calendar export.
 - An evidence log with actual hours, reflections, links, and Markdown export.
@@ -47,14 +47,14 @@ This adapter is prepared, but a real model is **not installed or hosted by the p
 
 This is a working local-first MVP, not a multi-user service. Data stays in this browser's localStorage. There is no login, cloud sync, billing, counselor service, automatic registration, or notification delivery. Export a backup before changing devices or clearing browser data. The evidence log supports up to 500 records per backup. Do not put sensitive documents in shared browser profiles.
 
-Matching checks known minimum/maximum ages, expired event dates, and preference relevance. Country, citizenship, enrollment, and event-specific conditions must still be checked with the organizer. Profile country and free-text notes are personal context, not automated eligibility inputs. The planner deliberately excludes full-time commitments from a part-time schedule and does not invent deadlines. Resources are starting points, not guaranteed placements.
+Matching checks known minimum/maximum ages, explicit school/college requirements, expired event dates, application dates, and preference relevance. Unknown visitors are not assigned a fictional age. Country, citizenship, age-at-deadline exceptions, and event-specific conditions still need an organizer check. Application expiration uses calendar dates; the displayed official time zone and cutoff time remain authoritative. Profile country and free-text notes are personal context, not automated eligibility inputs. The planner deliberately excludes full-time commitments from a part-time schedule and does not invent deadlines. Resources are starting points, not guaranteed placements.
 
 The previous code exposed an API key and tracked an environment file. They have been removed from the current source tree, along with the obsolete OpenAI clients and credential logging. **Revoke any previously published key that is still active.** Git history was not rewritten.
 
 ## Maintain the catalog
 
-Edit `src/catalog.js`. Each entry should have a primary source, review date, distinct category, eligibility text, accurate cost/format labels, and a concrete possible output. Never convert an event date into an application deadline. Keep directories distinct from programs, and distinguish simulations, open courses, and research participation from internships or formal credit. Review before each application season.
+Edit `src/catalog.js`, `src/catalog-extra.js`, and `src/opportunity-actions.js`. See [research notes](src/RESEARCH.md). Each entry should have a primary source, review date, distinct category, eligibility text, accurate cost/format labels, and a concrete possible output. Never convert an event date into an application deadline. Keep directories distinct from programs, and distinguish simulations, open courses, and research participation from internships or formal credit. Review before each application season.
 
-`src/engine.js` contains matching, scheduling, calendar export, backup validation, and guide logic. Tests cover eligibility, dates, time allocation across every major, unsafe imported URLs, and calendar escaping. GitHub Actions runs tests and a production build on pushes and pull requests.
+`src/engine.js` contains matching, scheduling, calendar export, backup validation, and guide logic. The 33 tests cover eligibility and enrollment, unknown visitors, application expiration, multiword search, checklist backup compatibility, catalog integrity, time allocation across every major, unsafe imported URLs, and calendar escaping. GitHub Actions runs tests and a production build on pushes and pull requests.
 
 See [PRODUCT.md](PRODUCT.md) for the launch hypothesis, demo flow, and next investment decisions.

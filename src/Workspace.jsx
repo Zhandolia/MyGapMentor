@@ -324,6 +324,29 @@ export function Tracker() {
                   Remove<span className="sr-only"> {o.title}</span>
                 </button>
               </div>
+              <fieldset className="activity-checklist">
+                <legend>Your next steps</legend>
+                {o.steps.map((step, index) => (
+                  <label className="check-label" key={step}>
+                    <input
+                      type="checkbox"
+                      checked={(s.stepsDone || []).includes(index)}
+                      onChange={() =>
+                        updateSaved(id, {
+                          stepsDone: (s.stepsDone || []).includes(index)
+                            ? s.stepsDone.filter((i) => i !== index)
+                            : [...(s.stepsDone || []), index],
+                        })
+                      }
+                    />
+                    <span>{step}</span>
+                  </label>
+                ))}
+                <p className="small quiet">
+                  {(s.stepsDone || []).length} of {o.steps.length} steps
+                  complete · Checking a step does not submit an application.
+                </p>
+              </fieldset>
               <div className="form-grid">
                 <label>
                   Status

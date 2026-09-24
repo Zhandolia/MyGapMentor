@@ -37,7 +37,7 @@ export function Profile() {
     };
     setState((s) => ({ ...s, profile }));
     notify("Your direction is saved.");
-    navigate(state.plan.length ? "/workspace" : "/plan");
+    navigate(`/discover?major=${encodeURIComponent(profile.major)}`);
   };
   const importFile = async (e) => {
     setError("");
@@ -66,25 +66,15 @@ export function Profile() {
     <>
       <PageHead
         eyebrow="YOUR PROFILE"
-        title="Start with your direction."
-        description="You don’t need to have the whole year figured out. These details help narrow the next step."
+        title="Three details. Better matches."
+        description="Choose a subject, then let us check the published age and enrollment requirements."
       />
       <form className="panel profile-form" onSubmit={submit}>
         <div className="section-title">
-          <h2>Your interests &amp; situation</h2>
+          <h2>Your starting point</h2>
           <span className="pill">Stays on this device</span>
         </div>
         <div className="form-grid">
-          <label>
-            First name (optional)
-            <input
-              maxLength="60"
-              autoComplete="given-name"
-              value={draft.name}
-              onChange={(e) => field("name", e.target.value)}
-              placeholder="What should we call you?"
-            />
-          </label>
           <label>
             Intended major
             <select
@@ -121,108 +111,125 @@ export function Profile() {
               Used for published age requirements.
             </span>
           </label>
-          <label>
-            Country or region (optional)
+        </div>
+        <details className="optional-fields">
+          <summary>
+            Optional preferences{" "}
+            <span className="small quiet">Time, format &amp; goals</span>
+          </summary>
+          <div className="form-grid">
+            <label>
+              First name (optional)
+              <input
+                maxLength="60"
+                autoComplete="given-name"
+                value={draft.name}
+                onChange={(e) => field("name", e.target.value)}
+                placeholder="What should we call you?"
+              />
+            </label>
+            <label>
+              Country or region (optional)
+              <input
+                maxLength="80"
+                value={draft.country}
+                onChange={(e) => field("country", e.target.value)}
+                placeholder="e.g. United States"
+              />
+              <span className="field-hint">
+                For your notes. Country eligibility needs an organizer check.
+              </span>
+            </label>
+            <label>
+              Preferred format
+              <select
+                value={draft.format}
+                onChange={(e) => field("format", e.target.value)}
+              >
+                <option value="Remote">Remote</option>
+                <option value="Local">Local / in person</option>
+                <option value="Any">Either</option>
+              </select>
+            </label>
+          </div>
+
+          <div className="form-grid">
+            <label>
+              Hours available each week
+              <input
+                required
+                type="number"
+                min="2"
+                max="30"
+                step="0.5"
+                value={draft.hours}
+                onChange={(e) => field("hours", e.target.value)}
+              />
+              <span className="field-hint">
+                Include learning, making, and reflection.
+              </span>
+            </label>
+            <label>
+              Plan start date
+              <input
+                required
+                type="date"
+                min="2020-01-01"
+                max="2100-01-01"
+                value={draft.start}
+                onChange={(e) => field("start", e.target.value)}
+              />
+            </label>
+            <label className="wide">
+              My main goal
+              <select
+                value={draft.goal}
+                onChange={(e) => field("goal", e.target.value)}
+              >
+                {[
+                  "Build a portfolio",
+                  "Explore my major",
+                  "Make a community contribution",
+                ].map((g) => (
+                  <option key={g}>{g}</option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <label className="check-label">
             <input
-              maxLength="80"
-              value={draft.country}
-              onChange={(e) => field("country", e.target.value)}
-              placeholder="e.g. United States"
+              type="checkbox"
+              checked={draft.freeOnly}
+              onChange={(e) => field("freeOnly", e.target.checked)}
+            />
+            Prioritize opportunities with free participation
+          </label>
+          <label>
+            Interests, experience &amp; constraints (optional)
+            <textarea
+              rows="4"
+              maxLength="1500"
+              value={draft.notes}
+              onChange={(e) => field("notes", e.target.value)}
+              placeholder="What have you enjoyed? What have you already tried? What needs to fit around work or family commitments?"
             />
             <span className="field-hint">
-              For your notes. Country eligibility needs an organizer check.
+              A personal note; the automatic plan uses your major, goal, format,
+              and time budget.
             </span>
           </label>
-          <label>
-            Preferred format
-            <select
-              value={draft.format}
-              onChange={(e) => field("format", e.target.value)}
-            >
-              <option value="Remote">Remote</option>
-              <option value="Local">Local / in person</option>
-              <option value="Any">Either</option>
-            </select>
-          </label>
-        </div>
-        <hr />
-        <h2>A realistic commitment</h2>
-        <div className="form-grid">
-          <label>
-            Hours available each week
-            <input
-              required
-              type="number"
-              min="2"
-              max="30"
-              step="0.5"
-              value={draft.hours}
-              onChange={(e) => field("hours", e.target.value)}
-            />
-            <span className="field-hint">
-              Include learning, making, and reflection.
-            </span>
-          </label>
-          <label>
-            Plan start date
-            <input
-              required
-              type="date"
-              min="2020-01-01"
-              max="2100-01-01"
-              value={draft.start}
-              onChange={(e) => field("start", e.target.value)}
-            />
-          </label>
-          <label className="wide">
-            My main goal
-            <select
-              value={draft.goal}
-              onChange={(e) => field("goal", e.target.value)}
-            >
-              {[
-                "Build a portfolio",
-                "Explore my major",
-                "Make a community contribution",
-              ].map((g) => (
-                <option key={g}>{g}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-        <label className="check-label">
-          <input
-            type="checkbox"
-            checked={draft.freeOnly}
-            onChange={(e) => field("freeOnly", e.target.checked)}
-          />
-          Prioritize opportunities with free participation
-        </label>
-        <label>
-          Interests, experience &amp; constraints (optional)
-          <textarea
-            rows="4"
-            maxLength="1500"
-            value={draft.notes}
-            onChange={(e) => field("notes", e.target.value)}
-            placeholder="What have you enjoyed? What have you already tried? What needs to fit around work or family commitments?"
-          />
-          <span className="field-hint">
-            A personal note; the automatic plan uses your major, goal, format,
-            and time budget.
-          </span>
-        </label>
+        </details>
         <div className="actions">
           <button type="submit" className="button primary">
-            Save my direction <Icon name="arrow" />
+            Show my matches <Icon name="arrow" />
           </button>
           <span className="small quiet">
             No account, payment, or API key required.
           </span>
         </div>
       </form>
-      <section className="panel data-panel">
-        <h2>Your workspace, under your control.</h2>
+      <details className="panel data-panel optional-fields">
+        <summary>Backup &amp; data settings</summary>
         <p>
           Your profile, plan, tracker, and evidence save in this browser. They
           do not sync between devices. Export a backup before clearing browser
@@ -255,7 +262,7 @@ export function Profile() {
             {error}
           </p>
         )}
-      </section>
+      </details>
       {imported && (
         <Modal title="Restore this backup?" onClose={() => setImported(null)}>
           <p>
@@ -533,7 +540,10 @@ export function Guides() {
           affiliated with the linked organizations. Programs can change after
           review. Each listing shows eligibility notes and a source link. Event
           dates are labeled separately from deadlines. Directories require
-          checking each event’s rules.
+          checking each event’s rules. This curated catalog is not exhaustive or
+          a live feed. Age and enrollment checks use your profile; country,
+          citizenship, exceptions, and age-at-deadline rules need an organizer
+          check. Suggested outputs and checklists are written by MyGapMentor.
         </p>
         <h3>Feedback &amp; corrections</h3>
         <p>

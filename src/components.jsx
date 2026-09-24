@@ -168,6 +168,10 @@ export function OpportunityCard({
       {!compact && (
         <>
           <p className="timing">{op.timing}</p>
+          <div className="outcome-preview">
+            <strong>What you can produce</strong>
+            <p>{op.evidence}</p>
+          </div>
           <div className="match-reason">
             {op.reasons[0] || "Explore a different direction"}
           </div>
@@ -183,7 +187,7 @@ export function OpportunityCard({
         </button>
         {onDetails ? (
           <button className="text-button" onClick={() => onDetails(op)}>
-            Details →
+            See steps →
           </button>
         ) : (
           <Link to={`/discover?op=${op.id}`}>View details →</Link>

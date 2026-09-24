@@ -1,3 +1,5 @@
+import { extraOpportunities } from "./catalog-extra";
+import { enrichOpportunity } from "./opportunity-actions";
 export const CHECKED = "2026-09-24";
 export const MAJORS = [
   "Computer Science",
@@ -93,7 +95,7 @@ const item = (
   review: false,
   ...extra,
 });
-export const opportunities = [
+const originalOpportunities = [
   item(
     "by-the-people",
     "By the People transcription",
@@ -428,6 +430,7 @@ export const opportunities = [
       review: true,
       status: "next-cycle",
       timing: "Prepare for a future cycle · check schedule",
+      source: "https://developers.google.com/open-source/gsoc/timeline",
     },
   ),
   item(
@@ -455,3 +458,8 @@ export const opportunities = [
     },
   ),
 ];
+
+export const opportunities = [
+  ...originalOpportunities,
+  ...extraOpportunities(item, MAJORS),
+].map(enrichOpportunity);

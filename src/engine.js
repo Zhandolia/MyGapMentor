@@ -56,8 +56,13 @@ export const STATUSES = [
 ];
 export function match(op, profile, now = today()) {
   const p = profile || blankProfile();
-  const blocked = p.age < op.minAge || (op.maxAge && p.age > op.maxAge);
+  const ageKnown = profile && Number.isFinite(profile.age);
+  const blocked =
+    ageKnown && (p.age < op.minAge || (op.maxAge && p.age > op.maxAge));
+  const stageConflict =
+    profile?.stage && op.stages && !op.stages.includes(profile.stage);
   const ended = op.endDate && op.endDate < now;
+  const cycleClosed = !!(op.deadline && op.deadline < now);
   const reasons = [];
   let score = 0;
   if (op.majors.includes(p.major)) {
@@ -85,29 +90,60 @@ export function match(op, profile, now = today()) {
     p.goal === "Build a portfolio"
   )
     score += 12;
-  if (op.status === "next-cycle") score -= 18;
+  if (op.status === "next-cycle" || cycleClosed) score -= 18;
   if (op.minHours && p.hours < op.minHours) {
     score -= 25;
     reasons.push("Exceeds your weekly time budget");
   }
   const eligibility = blocked
     ? op.maxAge
-      ? `Volunteer ages ${op.minAge}–${op.maxAge}`
+      ? `Published ages ${op.minAge}–${op.maxAge}`
       : `Requires age ${op.minAge}+`
-    : ended
-      ? "Event has ended"
-      : op.status === "next-cycle"
-        ? "Future cycle"
-        : op.review
-          ? "Check specific rules"
-          : "Broadly accessible";
+    : stageConflict
+      ? op.stages.includes("college")
+        ? "Requires college enrollment"
+        : "Requires high-school enrollment"
+      : ended
+        ? "Event has ended"
+        : cycleClosed
+          ? "Applications closed"
+          : op.status === "next-cycle"
+            ? "Future cycle"
+            : !ageKnown && (op.minAge || op.maxAge || op.stages)
+              ? "Check age & enrollment"
+              : op.review
+                ? "Check specific rules"
+                : "Broadly accessible";
   return {
     ...op,
-    score: blocked || ended ? -100 : score,
+    score: blocked || ended || stageConflict ? -100 : score,
     reasons,
-    blocked: !!(blocked || ended),
+    blocked: !!(blocked || ended || stageConflict),
+    cycleClosed,
     eligibilityLabel: eligibility,
   };
+}
+export function searchMatches(op, query) {
+  const normalize = (text) =>
+    text
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ")
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((w) => (w.length > 4 ? w.replace(/s$/, "") : w));
+  const aliases = {
+    coding: "programming",
+    olympiad: "olympiad",
+    camp: "summer",
+    ai: "ai",
+    volunteering: "volunteer",
+  };
+  const tokens = normalize(
+    `${op.title} ${op.organization} ${op.category} ${op.summary} ${op.majors.join(" ")} ${op.keywords || ""}`,
+  ).map((w) => aliases[w] || w);
+  return normalize(query)
+    .filter((w) => !["a", "an", "the", "for", "in", "and"].includes(w))
+    .every((w) => tokens.some((t) => t.includes(aliases[w] || w)));
 }
 export const ranked = (profile, now) =>
   opportunities
@@ -289,6 +325,15 @@ export function validateState(raw) {
           notes: text(s.notes, 2000),
           due: validDate(s.due) ? s.due : "",
           url: safeUrl(text(s.url, 1000)),
+          stepsDone: Array.isArray(s.stepsDone)
+            ? [
+                ...new Set(
+                  s.stepsDone.filter(
+                    (i) => Number.isInteger(i) && i >= 0 && i < op.steps.length,
+                  ),
+                ),
+              ]
+            : [],
         };
     }
   if (

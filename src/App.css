@@ -1754,3 +1754,248 @@ footer {
     font-size: 11px;
   }
 }
+
+/* The examples occupy their own rows, leaving the search unobstructed. */
+.landing {
+  grid-template-rows: auto auto auto;
+  gap: 62px;
+  padding: 112px 32px 90px;
+  align-content: center;
+}
+.landing-center {
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+.floating-examples {
+  width: min(100%, 1100px);
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+}
+.floating-examples a {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid #e6edf5;
+  border-radius: 15px;
+  padding: 17px 21px;
+  background: #f9fbfe;
+  color: #647a96;
+  text-decoration: none;
+  box-shadow: 0 6px 22px #183c6b04;
+  animation: gentle-float 9s ease-in-out infinite;
+}
+.floating-examples span {
+  font-size: 13px;
+  font-weight: 500;
+}
+.floating-examples small {
+  font-size: 10px;
+  color: #697a90;
+}
+.floating-examples a:nth-child(2) {
+  animation-delay: -3s;
+}
+.floating-examples a:nth-child(3) {
+  animation-delay: -6s;
+}
+.examples-bottom {
+  width: min(100%, 1000px);
+}
+.examples-bottom a {
+  animation-delay: -4s;
+  background: #fcfcfe;
+}
+.floating-examples a:hover,
+.floating-examples a:focus-visible {
+  border-color: #b1c5df;
+  color: #345985;
+  animation-play-state: paused;
+}
+.motion-paused .floating-examples a {
+  animation-play-state: paused;
+}
+.motion-control {
+  position: absolute;
+  bottom: 22px;
+  right: 32px;
+  font-size: 10px;
+  color: #6e7e92;
+}
+@keyframes gentle-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-9px) rotate(1deg);
+  }
+}
+.optional-fields {
+  margin: 16px 0;
+}
+.optional-fields summary {
+  cursor: pointer;
+  color: #385981;
+  font-weight: 600;
+  padding: 12px 0;
+}
+.optional-fields summary > span {
+  font-weight: 400;
+  margin-left: 8px;
+}
+.optional-fields[open] summary {
+  margin-bottom: 16px;
+}
+.optional-fields .form-grid {
+  margin-bottom: 20px;
+}
+.catalog-note {
+  margin-top: -12px;
+  margin-bottom: 22px;
+}
+.timing-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 16px;
+}
+.timing-tabs button {
+  border: 1px solid #e1e7ef;
+  background: #fff;
+  border-radius: 20px;
+  padding: 8px 12px;
+  font-size: 11px;
+  color: #5c6f89;
+}
+.timing-tabs button[aria-pressed="true"] {
+  color: #285c9d;
+  border-color: #b4cce9;
+  background: #edf4fe;
+}
+.outcome-preview {
+  margin: 12px 0;
+  padding: 13px 15px;
+  border-radius: 10px;
+  background: #f5f8fc;
+  color: #465c78;
+}
+.outcome-preview strong {
+  font-size: 11px;
+}
+.outcome-preview p {
+  margin: 5px 0 0;
+  font-size: 12px;
+}
+.load-more {
+  text-align: center;
+  margin: 28px 0;
+}
+.next-steps {
+  padding-left: 23px;
+}
+.next-steps li {
+  margin-bottom: 13px;
+  padding-left: 7px;
+}
+.next-steps li::marker {
+  color: #4873ae;
+  font-weight: 600;
+}
+.alternative-box {
+  padding: 18px;
+  background: #f4f8fe;
+  border-radius: 12px;
+  margin: 20px 0;
+  display: grid;
+  gap: 10px;
+}
+.activity-checklist {
+  border: 0;
+  margin: 12px 0 22px;
+  padding: 0;
+}
+.activity-checklist legend {
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.activity-checklist .check-label {
+  align-items: flex-start;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+.activity-checklist input {
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.activity-checklist input:checked + span {
+  text-decoration: line-through;
+  color: #78869a;
+}
+@media (max-width: 760px) {
+  .landing {
+    gap: 48px;
+    padding: 100px 24px 80px;
+  }
+  .floating-examples {
+    justify-content: center;
+    gap: 14px;
+  }
+  .floating-examples a {
+    padding: 13px 14px;
+    flex: 1;
+    max-width: 235px;
+  }
+  .floating-examples a:last-child {
+    display: none;
+  }
+  .floating-examples span {
+    font-size: 11px;
+  }
+  .floating-examples small {
+    font-size: 9px;
+  }
+  .optional-fields summary > span {
+    display: block;
+    margin: 5px 0 0;
+  }
+}
+@media (max-width: 400px) {
+  .landing {
+    padding-left: 18px;
+    padding-right: 18px;
+    gap: 42px;
+  }
+  .floating-examples {
+    gap: 10px;
+  }
+  .floating-examples a {
+    padding: 12px 10px;
+  }
+  .floating-examples span {
+    font-size: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floating-examples a {
+    animation: none;
+  }
+  .motion-control {
+    display: none;
+  }
+}
+
+.filters {
+  padding: 16px 20px;
+}
+.filters .optional-fields {
+  margin: 5px 0 0;
+}
+.filters .optional-fields summary {
+  padding: 8px 0;
+}
+.filters .timing-tabs {
+  margin-top: 8px;
+}
