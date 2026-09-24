@@ -286,7 +286,10 @@ function Shell() {
     </Context.Provider>
   );
 }
-const oldPath = window.location.pathname.replace(/\/$/, "");
+const oldPath = window.location.pathname
+  .replace(/^\/MyGapMentor(?=\/|$)/i, "")
+  .replace(/\/index\.html$/, "")
+  .replace(/\/$/, "");
 if (
   !window.location.hash &&
   oldPath &&

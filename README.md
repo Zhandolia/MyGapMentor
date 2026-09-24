@@ -2,6 +2,8 @@
 
 A practical gap-year workspace: discover relevant opportunities, build a realistic plan, track commitments, and keep evidence of your work.
 
+Live website: https://zhandolia.github.io/MyGapMentor/
+
 ## What works
 
 - A minimal, search-first front page with 16 stationary quick-search buttons beneath the search bar.
@@ -30,7 +32,9 @@ npm run serve
 
 `npm run serve` opens a loopback-only production preview at `http://127.0.0.1:4175`. The dev server is for frontend development; use the production preview for the optional AI adapter.
 
-The Vite build goes to `build/`. `vercel.json` preserves older direct page links with a rewrite; hash routes make the app portable to static hosting. The connected Vercel project can deploy from `main`. For GitHub Pages, build with `npm run build -- --base=/MyGapMentor/` and publish the contents of `build/` using Pages. There are no required environment variables.
+The Vite build goes to `build/` with relative assets and hash routes for both root and project hosting. GitHub Actions tests and builds every push to `main`, then deploys the passing build to GitHub Pages. Pull requests are tested without publishing. Pages uses the GitHub Actions publishing source. No deployment secrets, API keys, paid services, or running local server are required. The connected Vercel project remains available for older links; `vercel.json` preserves its older direct page links.
+
+Moving from Vercel: personal work is stored per website origin. Export your JSON backup from **Profile** on the old site, then import it in **Profile** on GitHub Pages. It will not transfer automatically. The catalog refresh URL is independent of the hosting domain.
 
 ## Optional local AI — no paid API
 
