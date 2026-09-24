@@ -1,72 +1,59 @@
-# Getting Started with Create React App
+# MyGapMentor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A practical gap-year workspace: discover relevant opportunities, build a realistic plan, track commitments, and keep evidence of your work.
 
-## Available Scripts
+## What works
 
-In the project directory, you can run:
+- A consistent, responsive workspace retaining the original blue-and-white identity and logo.
+- Profiles for 20 intended majors; age-aware matching with explanations rather than admissions scores.
+- 20 source-reviewed programs, practice resources, and directories, with eligibility notes and explicit event-date labels. Reviewed September 24, 2026.
+- Search, major/type/format/free filters, up to three-way comparison, and saved opportunities.
+- A 12-week plan with a major-specific independent project, weekly hour budget, editable tasks and dates, and completion tracking.
+- An application/activity tracker with status, notes, personal target dates, and calendar export.
+- An evidence log with actual hours, reflections, links, and Markdown export.
+- Local persistence, validated JSON backup/restore, and explicit reset confirmation.
+- A structured mentor guide that works without any API key. An optional local Ollama adapter supports free-form coaching when run on your computer.
 
-### `npm start`
+## Run
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Use Node 22.12+ (the deployment uses Node 22).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```sh
+npm ci
+npm run dev
+npm run test:ci
+npm run build
+npm run serve
+```
 
-### `npm test`
+`npm run serve` opens a loopback-only production preview at `http://127.0.0.1:4175`. The dev server is for frontend development; use the production preview for the optional AI adapter.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The Vite build goes to `build/`. `vercel.json` preserves older direct page links with a rewrite; hash routes make the app portable to static hosting. The connected Vercel project can deploy from `main`. For GitHub Pages, build with `npm run build -- --base=/MyGapMentor/` and publish the contents of `build/` using Pages. There are no required environment variables.
 
-### `npm run build`
+## Optional local AI — no paid API
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Install [Ollama](https://ollama.com/download) from its official distribution.
+2. Download a local model, for example `ollama pull qwen2.5:3b`.
+3. Keep Ollama running on its default loopback address, `127.0.0.1:11434`.
+4. Run `npm run build` and `npm run serve`.
+5. Open Mentor guide in the local workspace. The additional local-AI form appears only on localhost.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Set `OLLAMA_MODEL` before starting the server to choose a different installed model. The adapter uses Ollama's [chat endpoint](https://docs.ollama.com/api/chat), a fixed loopback URL, an 80-second timeout, a response-size limit, and one concurrent generation. The server validates Host and Origin to avoid exposing the model to arbitrary websites. It sends only the question, major, weekly time budget, and structured guide—not the full profile or evidence log. It does not log prompts or credentials.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This adapter is prepared, but a real model is **not installed or hosted by the public deployment**. Inference requires your own computer/compute and the model's license. The core workspace and mentor guide always work without it. Do not expose this local server publicly; public AI hosting would need authenticated access, abuse controls, and separately provisioned compute.
 
-### `npm run eject`
+## Data and limitations
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+This is a working local-first MVP, not a multi-user service. Data stays in this browser's localStorage. There is no login, cloud sync, billing, counselor service, automatic registration, or notification delivery. Export a backup before changing devices or clearing browser data. The evidence log supports up to 500 records per backup. Do not put sensitive documents in shared browser profiles.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Matching checks known minimum/maximum ages, expired event dates, and preference relevance. Country, citizenship, enrollment, and event-specific conditions must still be checked with the organizer. Profile country and free-text notes are personal context, not automated eligibility inputs. The planner deliberately excludes full-time commitments from a part-time schedule and does not invent deadlines. Resources are starting points, not guaranteed placements.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The previous code exposed an API key and tracked an environment file. They have been removed from the current source tree, along with the obsolete OpenAI clients and credential logging. **Revoke any previously published key that is still active.** Git history was not rewritten.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Maintain the catalog
 
-## Learn More
+Edit `src/catalog.js`. Each entry should have a primary source, review date, distinct category, eligibility text, accurate cost/format labels, and a concrete possible output. Never convert an event date into an application deadline. Keep directories distinct from programs, and distinguish simulations, open courses, and research participation from internships or formal credit. Review before each application season.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+`src/engine.js` contains matching, scheduling, calendar export, backup validation, and guide logic. Tests cover eligibility, dates, time allocation across every major, unsafe imported URLs, and calendar escaping. GitHub Actions runs tests and a production build on pushes and pull requests.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# MyGapMentor-main
-# MyGapMentor-main
+See [PRODUCT.md](PRODUCT.md) for the launch hypothesis, demo flow, and next investment decisions.
