@@ -1,6 +1,12 @@
 import { readFeed, sanitizeRecord, liveOpportunity } from "./live-catalog";
-import { MAJORS } from "./catalog";
-import { match, emptyState, validateState, resolveOpportunity } from "./engine";
+import { MAJORS, opportunities } from "./catalog";
+import {
+  match,
+  emptyState,
+  validateState,
+  resolveOpportunity,
+  blankProfile,
+} from "./engine";
 const record = {
   id: "live-zoo-999999999",
   title: "Galaxy classification",
@@ -12,6 +18,21 @@ const record = {
   tags: ["astronomy"],
   format: "Remote",
 };
+test("a broad inferred science topic does not crowd out a curated mathematics activity", () => {
+  const profile = { ...blankProfile(), major: "Mathematics" };
+  const curated = match(
+    opportunities.find((op) => op.id === "euler"),
+    profile,
+    "2026-09-24",
+  );
+  const imported = match(
+    liveOpportunity(record, MAJORS),
+    profile,
+    "2026-09-24",
+  );
+  expect(curated.score).toBeGreaterThan(imported.score);
+  expect(imported.reasons[0]).toBe("Suggested topic: Mathematics");
+});
 test("only recognized feed sources and safe URLs are accepted", () => {
   expect(sanitizeRecord(record)).toBeTruthy();
   expect(

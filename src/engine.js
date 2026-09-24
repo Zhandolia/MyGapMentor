@@ -71,7 +71,9 @@ export function match(op, profile, now = today()) {
   let score = 0;
   if (op.majors.includes(p.major)) {
     score += op.majors.length === MAJORS.length ? 12 : 40;
-    reasons.push(`Relevant to ${p.major}`);
+    reasons.push(
+      op.provider ? `Suggested topic: ${p.major}` : `Relevant to ${p.major}`,
+    );
   }
   if (op.format === p.format || p.format === "Any") {
     score += 10;
@@ -95,7 +97,7 @@ export function match(op, profile, now = today()) {
   )
     score += 12;
   if (op.status === "next-cycle" || cycleClosed) score -= 18;
-  if (op.provider) score -= 4;
+  if (op.provider) score -= 16;
   if (op.minHours && p.hours < op.minHours) {
     score -= 25;
     reasons.push("Exceeds your weekly time budget");
